@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Manager">
+      <UniqueIdentifier>{5f682b61-2318-4533-9958-ed4cd3792f9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Manager">
+      <UniqueIdentifier>{a77dce39-134f-49fc-a9b0-89a06a199809}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shaders">
+      <UniqueIdentifier>{ef098aac-ed89-4f61-9c02-c843ef36d726}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ModelLoading">
+      <UniqueIdentifier>{2dd6a1cb-bccb-422f-b504-7f2da57cbab8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ModelLoading">
+      <UniqueIdentifier>{79d05194-e53c-4023-bc5c-ad895f69fe92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Resources">
+      <UniqueIdentifier>{3dd9bc0d-da7c-4666-aed4-089dda309787}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resources">
+      <UniqueIdentifier>{bee6f3b1-dce7-4201-9e45-10576fdcf54d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SceneObjects">
+      <UniqueIdentifier>{7b5e7afa-4c8a-4b96-a5c9-5248fde4b5ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SceneObjects">
+      <UniqueIdentifier>{ffb2ec2b-afc8-45a0-a1a0-10d8da5b9076}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowControl.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexBufferObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>Source Files\SceneObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\SceneObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="AssimpModel.cpp">
+      <Filter>Source Files\ModelLoading</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="InputManager.h">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowControl.h">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBufferObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>Header Files\SceneObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\SceneObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="AssimpModel.h">
+      <Filter>Header Files\ModelLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Header Files\Resources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DefaultVS.glsl">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="DefaultFS.glsl">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="SkyboxVS.glsl">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="SkyboxFS.glsl">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CarBattle.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
