@@ -8,7 +8,6 @@ layout (location = 3) in vec4 color;
 uniform mat4 projection;
 uniform mat4 view;
 uniform mat4 model;
-uniform mat4 normalMatrix;
 
 out vec2 TexCoord;
 out vec3 Normal;
@@ -22,7 +21,7 @@ void main()
 	gl_Position = projection * eyeSpacePos;//view * model * vec4(position, 1.0f);
 	TexCoord = texCoord;
 
-	vec4 vRes = normalMatrix * vec4(normal, 0.0f);
+	vec4 vRes = transpose(inverse(model)) * vec4(normal, 0.0f);
 	Normal = vRes.xyz;
 
 	EyePos = eyeSpacePos;

@@ -148,8 +148,8 @@ void Game::Init(WindowControl* windowControl)
 		
 	skybox.LoadSkybox("skyboxes/", "jajlands1_ft.jpg", "jajlands1_bk.jpg", "jajlands1_lf.jpg", "jajlands1_rt.jpg", "jajlands1_up.jpg", "jajlands1_dn.jpg");
 
-	amModels[0].LoadModelFromFile("models/Wolf/wolf.obj");
-	amModels[1].LoadModelFromFile("models/house/house.3ds");
+	amModels[0].LoadModelFromFile("models/Deadpool/dead 123456.obj");
+	//amModels[1].LoadModelFromFile("models/house/house.3ds");
 	//amModels[2].LoadModelFromFile("models/Content/jeep.obj");
 
 	AssimpModel::FinalizeVBO();
@@ -217,12 +217,10 @@ void Game::Render()
 	glm::mat4 model;
 
 	skybox.Render();
-
-
-	glm::vec3 vSunPos(50, 50, 0.0);
-
-
+	
 	shaderProgram[0]->UseProgram();
+	shaderProgram[0]->SetUniform("diffuse", 0);
+	shaderProgram[0]->SetUniform("specular", 1);
 	shaderProgram[0]->SetUniform("color", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	dLight.SendToShader(*shaderProgram[0]);
 	shaderProgram[0]->SetUniform("viewPos", camera.position);
@@ -240,7 +238,6 @@ void Game::Render()
 	shaderProgram[0]->SetUniform("projection", proj);
 	shaderProgram[0]->SetUniform("view", view);
 	shaderProgram[0]->SetUniform("model", model);
-	shaderProgram[0]->SetUniform("normalMatrix", glm::transpose(glm::inverse(model)));
 	model = glm::mat4();
 
 	shaderProgram[0]->SetUniform("fog.enabled", FogParameters::enabled);

@@ -10,7 +10,7 @@
 
 VertexBufferObject AssimpModel::m_vboModelData;
 unsigned int  AssimpModel::m_VAO;
-std::vector<Texture*> AssimpModel::m_textures;
+std::vector<TextureData> AssimpModel::m_textures;
 
 std::string GetDirectoryPath(std::string filePath)
 {
@@ -100,8 +100,19 @@ bool AssimpModel::LoadModelFromFile(char* filePath)
 		const aiMaterial* material = scene->mMaterials[i];
 		int texIndex = 0;
 		aiString path;  // filename
-
+		bool ok = false;
+		TextureType type;
+		type = DIFFUSE;
 		if (material->GetTexture(aiTextureType_DIFFUSE, texIndex, &path) == AI_SUCCESS)
+		{
+			ok = true;
+		}
+		else if (material->GetTexture(aiTextureType_SPECULAR, texIndex, &path) == AI_SUCCESS)
+		{
+			ok = true;
+		}
+	
+		if(ok)
 		{
 			std::string dir = GetDirectoryPath(filePath);
 			std::string textureName = path.data;
@@ -109,7 +120,7 @@ bool AssimpModel::LoadModelFromFile(char* filePath)
 			int iTexFound = -1;
 			for(int j = 0; j < m_textures.size(); j++)
 			{
-				if (fullPath == m_textures[j]->GetPath())
+				if (fullPath == m_textures[j].texture.GetPath())
 				{
 					iTexFound = j;
 					break;
@@ -121,11 +132,14 @@ bool AssimpModel::LoadModelFromFile(char* filePath)
 			}
 			else
 			{
-				Texture* tNew = new Texture();
-				tNew->LoadTexture2D(fullPath, true);
-				tNew->SetFiltering(GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR);
+				Texture tNew;
+				tNew.LoadTexture2D(fullPath, true);
+				tNew.SetFiltering(GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR);
 				materialRemap[i] = m_textures.size();
-				m_textures.push_back(tNew);
+				TextureData texData;
+				texData.texture = tNew;
+				texData.type = type;
+				m_textures.push_back(texData);
 			}
 		}
 	}
@@ -182,8 +196,9 @@ void AssimpModel::RenderModel()
 		int iMatIndex = m_materialIndices[i];
 		if (iMatIndex < m_textures.size())
 		{
-			Texture* tex = m_textures[iMatIndex];
-			tex->BindTexture();
+			Texture tex = m_textures[iMatIndex].texture;
+			TextureType type = m_textures[iMatIndex].type;
+			tex.BindTexture(type);
 		}
 		glDrawArrays(GL_TRIANGLES, m_meshStartIndices[i], m_meshSizes[i]);
 	}

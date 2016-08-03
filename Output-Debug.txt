@@ -1,4 +1,4 @@
-﻿'CarBattle.exe' (Win32): Loaded 'C:\Users\Steve\Documents\carbattledemo\Debug\CarBattle.exe'. Symbols loaded.
+﻿'CarBattle.exe' (Win32): Loaded 'C:\Users\Steve\Documents\Engine\Debug\CarBattle.exe'. Symbols loaded.
 'CarBattle.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ntdll.dll'. Cannot find or open the PDB file.
 'CarBattle.exe' (Win32): Loaded 'C:\Windows\SysWOW64\kernel32.dll'. Cannot find or open the PDB file.
 'CarBattle.exe' (Win32): Loaded 'C:\Windows\SysWOW64\KernelBase.dll'. Cannot find or open the PDB file.
@@ -21,11 +21,11 @@
 'CarBattle.exe' (Win32): Loaded 'C:\Windows\SysWOW64\SHCore.dll'. Cannot find or open the PDB file.
 'CarBattle.exe' (Win32): Loaded 'C:\Windows\SysWOW64\powrprof.dll'. Cannot find or open the PDB file.
 'CarBattle.exe' (Win32): Loaded 'C:\Windows\SysWOW64\profapi.dll'. Cannot find or open the PDB file.
-'CarBattle.exe' (Win32): Loaded 'C:\Users\Steve\Documents\carbattledemo\Debug\assimp-vc130-mtd.dll'. Symbols loaded.
-'CarBattle.exe' (Win32): Loaded 'C:\Users\Steve\Documents\carbattledemo\Debug\FreeImage.dll'. Module was built without symbols.
+'CarBattle.exe' (Win32): Loaded 'C:\Users\Steve\Documents\Engine\Debug\assimp-vc130-mtd.dll'. Symbols loaded.
+'CarBattle.exe' (Win32): Loaded 'C:\Users\Steve\Documents\Engine\Debug\FreeImage.dll'. Module was built without symbols.
 'CarBattle.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ws2_32.dll'. Cannot find or open the PDB file.
 'CarBattle.exe' (Win32): Loaded 'C:\Windows\SysWOW64\opengl32.dll'. Cannot find or open the PDB file.
-'CarBattle.exe' (Win32): Loaded 'C:\Users\Steve\Documents\carbattledemo\Debug\glew32.dll'. Module was built without symbols.
+'CarBattle.exe' (Win32): Loaded 'C:\Users\Steve\Documents\Engine\Debug\glew32.dll'. Module was built without symbols.
 'CarBattle.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msvcp140d.dll'. Cannot find or open the PDB file.
 'CarBattle.exe' (Win32): Loaded 'C:\Windows\SysWOW64\vcruntime140d.dll'. Cannot find or open the PDB file.
 'CarBattle.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ucrtbased.dll'. Cannot find or open the PDB file.
@@ -47,17 +47,17 @@
 'CarBattle.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msasn1.dll'. Cannot find or open the PDB file.
 'CarBattle.exe' (Win32): Loaded 'C:\Windows\SysWOW64\crypt32.dll'. Cannot find or open the PDB file.
 'CarBattle.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ntmarta.dll'. Cannot find or open the PDB file.
-The thread 0x3e74 has exited with code 0 (0x0).
-The thread 0x3acc has exited with code 0 (0x0).
-The thread 0x1890 has exited with code 0 (0x0).
-The thread 0x271c has exited with code 0 (0x0).
+The thread 0x3108 has exited with code 0 (0x0).
+The thread 0x1894 has exited with code 0 (0x0).
+The thread 0x1d88 has exited with code 0 (0x0).
+The thread 0x148 has exited with code 0 (0x0).
 'CarBattle.exe' (Win32): Loaded 'C:\Windows\SysWOW64\winsta.dll'. Cannot find or open the PDB file.
 'CarBattle.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ole32.dll'. Cannot find or open the PDB file.
 'CarBattle.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\winmmbase.dll'
 'CarBattle.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\winmm.dll'
-The thread 0xb34 has exited with code 0 (0x0).
-The thread 0x1c68 has exited with code 0 (0x0).
-The thread 0x21c has exited with code 0 (0x0).
-The thread 0x2b24 has exited with code 0 (0x0).
-The thread 0x367c has exited with code 0 (0x0).
-The program '[5732] CarBattle.exe' has exited with code 0 (0x0).
+The thread 0x141c has exited with code 0 (0x0).
+The thread 0x2270 has exited with code 0 (0x0).
+The thread 0xc8 has exited with code 0 (0x0).
+The thread 0x1e44 has exited with code 0 (0x0).
+The thread 0x42dc has exited with code 0 (0x0).
+The program '[14588] CarBattle.exe' has exited with code 0 (0x0).

@@ -4,10 +4,22 @@
 #include "Shader.h"
 #include <vector>
 
+
+enum TextureType
+{
+	DIFFUSE = 0,
+	SPECULAR,
+};
+
+struct TextureData
+{
+	Texture texture;
+	TextureType type;
+};
+
 class AssimpModel
 {
 public:
-
 	bool LoadModelFromFile(char* filePath);
 	bool LoadModelFromFileBumpMap(char* filePath, char* colorMap, char* normalMap);
 
@@ -24,7 +36,7 @@ private:
 	bool m_bIsLoaded;
 	static VertexBufferObject m_vboModelData;
 	static unsigned int m_VAO;
-	static std::vector<Texture*> m_textures;
+	static std::vector<TextureData> m_textures;
 	std::vector<int> m_meshStartIndices;
 	std::vector<int> m_meshSizes;
 	std::vector<int> m_materialIndices;
