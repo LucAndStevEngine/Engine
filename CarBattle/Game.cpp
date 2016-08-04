@@ -13,6 +13,7 @@
 #include "Skybox.h"
 #include "AssimpModel.h"
 #include "Light.h"
+#include "FrameBuffer.h"
 
 #define FOG_EQUATION_LINEAR 0 
 #define FOG_EQUATION_EXP 1 
@@ -32,6 +33,7 @@ AssimpModel amModels[3];
 DirectionalLight dLight;
 PointLight pLight;
 SpotLight sLight;
+FrameBuffer frameBuffer;
 
 Game::Game()
 {
@@ -157,6 +159,10 @@ void Game::Init(WindowControl* windowControl)
 	pLight.diffuse = glm::vec3(1, 0, 0);
 	camera.position.y = 1;
 	sLight.diffuse = glm::vec3(0, 1, 0);
+
+	frameBuffer.CreateFrameBufferWithTexture(512, 256);
+	frameBuffer.AddDepthBufer();
+	frameBuffer.SetFrameBufferTextureFiltering(TEXTURE_FILTER_MAG_BILINEAR, TEXTURE_FILTER_MIN_TRILINEAR);
 }
 
 void Game::Update()
@@ -196,13 +202,18 @@ float rotation = 0;
 
 void Game::Render()
 {
+
+	frameBuffer.BindFrameBuffer();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	shaderProgram[1]->UseProgram();
+	camera.rotation.y += 180;
+	camera.Update();
 	glm::mat4 view = camera.LookAt();
-	glm::mat4 proj = glm::perspective(45.0f, (GLfloat)GetWindowWidth() / (GLfloat)GetWindowHeight(), 0.1f, 10000.0f);
+	glm::mat4 proj = glm::perspective(45.0, (double)GetWindowWidth() / (double)GetWindowHeight(), 0.1, 10000.0);
 
 	shaderProgram[1]->SetUniform("projection", proj);
 	shaderProgram[1]->SetUniform("view", glm::translate(view, camera.position));
-	shaderProgram[1]->SetUniform("color", glm::vec4(1, 0.25f, 0.25f, 1));
+	shaderProgram[1]->SetUniform("color", glm::vec4(1, 1, 1, 1));
 
 	shaderProgram[1]->SetUniform("fog.enabled", FogParameters::enabled);
 	if (FogParameters::enabled)
@@ -224,14 +235,14 @@ void Game::Render()
 	shaderProgram[0]->SetUniform("color", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	dLight.SendToShader(*shaderProgram[0]);
 	shaderProgram[0]->SetUniform("viewPos", camera.position);
-	shaderProgram[0]->SetUniform("numPointLights", 1);
-	pLight.SendToShader(*shaderProgram[0], 0);
+	//shaderProgram[0]->SetUniform("numPointLights", 1);
+	//pLight.SendToShader(*shaderProgram[0], 0);
 
 	shaderProgram[0]->SetUniform("numSpotLights", 1);
 	sLight.SendToShader(*shaderProgram[0], 0);
 
 	model = glm::mat4();
-	model = glm::translate(model, glm::vec3(0, 0, 0));
+	model = glm::translate(model, glm::vec3(100, -100, 0));
 	rotation += Time::deltaTime;
 	model = glm::rotate(model, rotation, glm::vec3(0, 1, 0));
 
@@ -255,6 +266,87 @@ void Game::Render()
 	amModels[0].RenderModel();
 	amModels[1].RenderModel();
 	amModels[2].RenderModel();
+
+
+	glBindFramebuffer(GL_FRAMEBUFFER, NULL);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	windowControl->ResizeWindow(windowControl->GetWidth(), windowControl->GetHeight());
+
+	shaderProgram[1]->UseProgram();
+	camera.rotation.y -= 180;
+	camera.Update();
+	view = camera.LookAt();
+	//glm::mat4 proj = glm::perspective(45.0, (double)GetWindowWidth() / (double)GetWindowHeight(), 0.1, 10000.0);
+
+	shaderProgram[1]->SetUniform("projection", proj);
+	shaderProgram[1]->SetUniform("view", glm::translate(view, camera.position));
+	shaderProgram[1]->SetUniform("color", glm::vec4(1, 1, 1, 1));
+
+	shaderProgram[1]->SetUniform("fog.enabled", FogParameters::enabled);
+	if (FogParameters::enabled)
+	{
+		shaderProgram[1]->SetUniform("fog.density", FogParameters::density);
+		shaderProgram[1]->SetUniform("fog.start", FogParameters::start);
+		shaderProgram[1]->SetUniform("fog.end", FogParameters::end);
+		shaderProgram[1]->SetUniform("fog.fogColor", FogParameters::color);
+		shaderProgram[1]->SetUniform("fog.equation", FogParameters::equation);
+	}
+
+	model = glm::mat4();
+
+	skybox.Render();
+
+	shaderProgram[0]->UseProgram();
+	shaderProgram[0]->SetUniform("diffuse", 0);
+	shaderProgram[0]->SetUniform("specular", 1);
+	shaderProgram[0]->SetUniform("color", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	dLight.SendToShader(*shaderProgram[0]);
+	shaderProgram[0]->SetUniform("viewPos", camera.position);
+	shaderProgram[0]->SetUniform("numPointLights", 1);
+	pLight.SendToShader(*shaderProgram[0], 0);
+
+	shaderProgram[0]->SetUniform("numSpotLights", 1);
+	sLight.SendToShader(*shaderProgram[0], 0);
+
+	model = glm::mat4();
+	model = glm::translate(model, glm::vec3(100, -100, 0));
+	rotation += Time::deltaTime;
+	model = glm::rotate(model, rotation, glm::vec3(0, 1, 0));
+
+	shaderProgram[0]->SetUniform("projection", proj);
+	shaderProgram[0]->SetUniform("view", view);
+	shaderProgram[0]->SetUniform("model", model);
+	model = glm::mat4();
+
+	shaderProgram[0]->SetUniform("fog.enabled", FogParameters::enabled);
+	if (FogParameters::enabled)
+	{
+		shaderProgram[0]->SetUniform("fog.density", FogParameters::density);
+		shaderProgram[0]->SetUniform("fog.start", FogParameters::start);
+		shaderProgram[0]->SetUniform("fog.end", FogParameters::end);
+		shaderProgram[0]->SetUniform("fog.fogColor", FogParameters::color);
+		shaderProgram[0]->SetUniform("fog.equation", FogParameters::equation);
+	}
+
+	AssimpModel::BindModelsVAO();
+
+	amModels[0].RenderModel();
+	amModels[1].RenderModel();
+	amModels[2].RenderModel();
+
+
+	model = glm::mat4();
+	model = glm::translate(model, glm::vec3(0, 0, 100));
+	model = glm::scale(model, glm::vec3(100, 100, 1));
+	shaderProgram[0]->SetUniform("model", model);
+	
+	model = glm::mat4();
+
+	glBindVertexArray(VAO);
+	frameBuffer.BindFrameBufferTexture(0, true);
+
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+
 }
 
 
@@ -273,7 +365,7 @@ int Game::GetWindowHeight()
 
 int Game::GetWindowWidth()
 {
-	return windowControl->GetHeight();
+	return windowControl->GetWidth();
 }
 
 Game::~Game()

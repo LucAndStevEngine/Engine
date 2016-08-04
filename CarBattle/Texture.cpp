@@ -8,6 +8,60 @@ Texture::Texture()
 	m_bMipMapsGenerated = false;
 }
 
+void Texture::CreateEmptyTexture(int width, int height, int BPP, GLenum format)
+{
+	glGenTextures(1, &m_textureID);
+	glBindTexture(GL_TEXTURE_2D, m_textureID);
+
+	if (format == GL_RGBA || format == GL_BGRA)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, format, GL_UNSIGNED_BYTE, NULL);
+	}
+	else if (format == GL_RGB || format == GL_BGR)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format, GL_UNSIGNED_BYTE, NULL);
+	}
+	else
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, NULL);
+	}
+
+	glGenSamplers(1, &m_samplerID);
+}
+
+void Texture::CreateFromData(BYTE* data, int width, int height, int BPP, GLenum format, bool bGenerateMipMaps)
+{
+	glGenTextures(1, &m_textureID);
+	glBindTexture(GL_TEXTURE_2D, m_textureID);
+
+	if (format == GL_RGBA || format == GL_BGRA)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+	}
+	else if (format == GL_RGB || format == GL_BGR)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+	}
+	else
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+	}
+
+	if (bGenerateMipMaps)
+	{
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+
+	glGenSamplers(1, &m_samplerID);
+
+	m_path = "";
+	m_bMipMapsGenerated = bGenerateMipMaps;
+	m_width = width;
+	m_height = height;
+	m_BPP = BPP;
+}
+
+
 bool Texture::LoadTexture2D(std::string path, bool bGenerateMipMaps)
 {
 	FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
@@ -89,10 +143,22 @@ void Texture::BindTexture(int textureUnit)
 void Texture::SetFiltering(int magnification, int minification)
 {
 	// Set magnification filter
-	glSamplerParameteri(m_samplerID, GL_TEXTURE_MAG_FILTER, magnification);
+	if (magnification == TEXTURE_FILTER_MAG_NEAREST)
+		glSamplerParameteri(m_samplerID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	else if (magnification == TEXTURE_FILTER_MAG_BILINEAR)
+		glSamplerParameteri(m_samplerID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// Set minification filter
-	glSamplerParameteri(m_samplerID, GL_TEXTURE_MIN_FILTER, minification);
+	if (minification == TEXTURE_FILTER_MIN_NEAREST)
+		glSamplerParameteri(m_samplerID, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	else if (minification == TEXTURE_FILTER_MIN_BILINEAR)
+		glSamplerParameteri(m_samplerID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	else if (minification == TEXTURE_FILTER_MIN_NEAREST_MIPMAP)
+		glSamplerParameteri(m_samplerID, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+	else if (minification == TEXTURE_FILTER_MIN_BILINEAR_MIPMAP)
+		glSamplerParameteri(m_samplerID, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+	else if (minification == TEXTURE_FILTER_MIN_TRILINEAR)
+		glSamplerParameteri(m_samplerID, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
 	m_minification = minification;
 	m_magnification = magnification;
@@ -117,6 +183,12 @@ void Texture::ReleaseTexture()
 {
 	glDeleteSamplers(1, &m_samplerID);
 	glDeleteTextures(1, &m_textureID);
+}
+
+
+unsigned int Texture::GetTextureID()
+{
+	return m_textureID;
 }
 
 std::string Texture::GetPath()

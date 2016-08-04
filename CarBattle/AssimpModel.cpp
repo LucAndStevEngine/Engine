@@ -134,7 +134,7 @@ bool AssimpModel::LoadModelFromFile(char* filePath)
 			{
 				Texture tNew;
 				tNew.LoadTexture2D(fullPath, true);
-				tNew.SetFiltering(GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR);
+				tNew.SetFiltering(TEXTURE_FILTER_MAG_BILINEAR, TEXTURE_FILTER_MIN_TRILINEAR);
 				materialRemap[i] = m_textures.size();
 				TextureData texData;
 				texData.texture = tNew;
