@@ -2,11 +2,9 @@
 
 // GLEW Include
 #include <GL\glew.h>
+#include <vector>
 #include "Shader.h"
-#include "Texture.h"
-#include "VertexBufferObject.h"
-#include "Skybox.h"
-#include "Camera.h"
+#include "SceneGraph.h"
 
 class Game
 {
@@ -23,23 +21,16 @@ public:
 	int GetWindowHeight();
 	int GetWindowWidth();
 
-private:
+protected:
+	std::vector<ShaderProgram*> programs;
+	std::vector<Shader*> shaders;
+
 	class WindowControl* windowControl;
-
-	VertexBufferObject vboGameObject;
-
-	GLuint VAO, VBO;
-
-	void Shutdown();
-	~Game();
-
-	Shader vShader[2], fShader[2];
-	ShaderProgram* shaderProgram[2];
-	Skybox skybox;
-
-	Texture test;
-
-	Camera camera;
-
+	SceneGraph* sceneGraph;
+	virtual void Shutdown();
+	virtual ~Game();
+private:
+	class Skybox* skybox;
+	class Camera* camera;
 };
 

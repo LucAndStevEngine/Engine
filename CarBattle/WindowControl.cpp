@@ -89,6 +89,12 @@ void WindowControl::Loop()
 
 		Update();
 
+		while(Time::m_fixedTime >= Time::fixedDeltaTime)
+		{
+			FixedUpdate();
+			Time::m_fixedTime -= Time::fixedDeltaTime;
+		}
+
 		Render();
 	}
 	
@@ -97,6 +103,11 @@ void WindowControl::Loop()
 void WindowControl::Update()
 {
 	game->Update();
+}
+
+void WindowControl::FixedUpdate()
+{
+	game->FixedUpdate();
 }
 
 void WindowControl::Render()

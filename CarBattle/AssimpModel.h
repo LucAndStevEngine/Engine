@@ -8,7 +8,7 @@
 enum TextureType
 {
 	DIFFUSE = 0,
-	SPECULAR,
+	SPECULAR = 2,
 };
 
 struct TextureData

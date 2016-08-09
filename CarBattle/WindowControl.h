@@ -18,6 +18,7 @@ public:
 
 	void Render();
 	void Update();
+	void FixedUpdate();
 
 	WindowControl();
 	~WindowControl();

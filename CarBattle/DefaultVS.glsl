@@ -27,4 +27,6 @@ void main()
 	EyePos = eyeSpacePos;
 	Color = color;
 
+	WorldPos = vec3(model * vec4(position, 1.0f));
+
 }

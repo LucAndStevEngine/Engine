@@ -102,23 +102,50 @@ bool AssimpModel::LoadModelFromFile(char* filePath)
 		aiString path;  // filename
 		bool ok = false;
 		TextureType type;
-		type = DIFFUSE;
-		if (material->GetTexture(aiTextureType_DIFFUSE, texIndex, &path) == AI_SUCCESS)
+
+		for (int k = 0; k < material->GetTextureCount(aiTextureType_DIFFUSE); k++)
 		{
-			ok = true;
-		}
-		else if (material->GetTexture(aiTextureType_SPECULAR, texIndex, &path) == AI_SUCCESS)
-		{
-			ok = true;
-		}
-	
-		if(ok)
-		{
+			material->GetTexture(aiTextureType_DIFFUSE, k, &path);
+			type = DIFFUSE;
+
 			std::string dir = GetDirectoryPath(filePath);
 			std::string textureName = path.data;
 			std::string fullPath = dir + textureName;
 			int iTexFound = -1;
-			for(int j = 0; j < m_textures.size(); j++)
+			for (int j = 0; j < m_textures.size(); j++)
+			{
+				if (fullPath == m_textures[j].texture.GetPath())
+				{
+					iTexFound = j;
+					break;
+				}
+			}
+			if (iTexFound != -1)
+			{
+				materialRemap[i] = iTexFound;
+			}
+			else
+			{
+				Texture tNew;
+				tNew.LoadTexture2D(fullPath, true);
+				tNew.SetFiltering(TEXTURE_FILTER_MAG_BILINEAR, TEXTURE_FILTER_MIN_TRILINEAR);
+				materialRemap[i] = m_textures.size();
+				TextureData texData;
+				texData.texture = tNew;
+				texData.type = type;
+				m_textures.push_back(texData);
+			}
+		}
+		for (int k = 0; k < material->GetTextureCount(aiTextureType_SPECULAR); k++)
+		{
+			material->GetTexture(aiTextureType_SPECULAR, k, &path);
+			type = SPECULAR;
+
+			std::string dir = GetDirectoryPath(filePath);
+			std::string textureName = path.data;
+			std::string fullPath = dir + textureName;
+			int iTexFound = -1;
+			for (int j = 0; j < m_textures.size(); j++)
 			{
 				if (fullPath == m_textures[j].texture.GetPath())
 				{
@@ -190,9 +217,17 @@ void AssimpModel::RenderModel()
 	{
 		return;
 	}
+
 	int numMeshes = m_meshSizes.size();
 	for (int i = 0; i < numMeshes; i++)
 	{
+		for (int j = 0; j <= SPECULAR; j++)
+		{
+			glActiveTexture(GL_TEXTURE0 + j);
+			glBindTexture(GL_TEXTURE_2D, 0);
+			glBindSampler(j, 0);
+		}
+
 		int iMatIndex = m_materialIndices[i];
 		if (iMatIndex < m_textures.size())
 		{
@@ -201,7 +236,16 @@ void AssimpModel::RenderModel()
 			tex.BindTexture(type);
 		}
 		glDrawArrays(GL_TRIANGLES, m_meshStartIndices[i], m_meshSizes[i]);
+
+
+		for (int j = 0; j <= SPECULAR; j++)
+		{
+			glActiveTexture(GL_TEXTURE0 + j);
+			glBindTexture(GL_TEXTURE_2D, 0);
+			glBindSampler(j, 0);
+		}
 	}
+
 }
 void AssimpModel::RenderModelBumpMap(ShaderProgram* program)
 {

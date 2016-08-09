@@ -1,0 +1,142 @@
+#include "SceneNode.h"
+
+
+
+SceneNode::SceneNode()
+{
+	m_lookAtOrigin = transform.forward;
+	m_upVectorOrigin = transform.up;
+	Init();
+}
+
+
+SceneNode::~SceneNode()
+{
+	if (m_parent != NULL)
+	{
+		for (int i = 0; i < m_parent->m_children.size(); i++)
+		{
+			if (m_parent->m_children[i] == this)
+			{
+				m_parent->m_children.erase(m_parent->m_children.begin() + i);
+			}		
+		}
+	}
+
+	for (int i = 0; i < m_children.size(); i++)
+	{
+		delete m_children[i];
+	}
+
+	//for (int i = 0; i < m_components.size(); i++)
+	//{
+	//	delete m_components[i];
+	//}
+}
+
+
+void SceneNode::AddChild(SceneNode* node)
+{
+	m_children.push_back(node);
+	if (m_parent != NULL)
+	{
+		node->RemoveParent();
+	}
+	node->m_parent = this;
+}
+
+void SceneNode::RemoveParent()
+{
+	if (m_parent != NULL)
+	{
+		m_parent->RemoveChild(this);
+		m_parent = NULL;
+	}
+}
+
+void SceneNode::SetParent(SceneNode* node)
+{
+	node->AddChild(this);
+}
+
+void SceneNode::RemoveChild(SceneNode* node)
+{
+	for (int i = 0; i < m_children.size(); i++)
+	{
+		if (m_children[i] == node)
+		{
+			m_children[i] = NULL;
+			m_children.erase(m_children.begin() + i);
+			node->RemoveParent();		
+			break;
+		}
+	}
+}
+
+std::vector<SceneNode*> SceneNode::GetChildren()
+{
+	return m_children;
+}
+
+
+
+
+SceneNode* SceneNode::GetParent()
+{
+	return m_parent;
+}
+
+void SceneNode::TraverseGraph(void(SceneNode::*ptr)())
+{
+	(this->*ptr)();
+	// use of function pointers so i dont have to rewrite the traverse logic
+	if (m_children.size() > 0)
+	{
+		for (int i = 0; i < m_children.size(); i++)
+		{
+			(m_children[i]->TraverseGraph(ptr));
+		}
+	}
+}
+
+
+void SceneNode::Init()
+{
+}
+
+void SceneNode::Update() 
+{
+	UpdateTransform();
+}
+
+void SceneNode::FixedUpdate()
+{
+
+}
+
+void SceneNode::UpdateTransform()
+{
+	glm::mat4 identity;
+	glm::mat4 currentTransform;
+	glm::quat rot;
+
+	rot *= glm::quat(cos(transform.euler.z / 2), 0, 0, sin(transform.euler.z / 2) * 1);
+	rot *= glm::quat(cos(transform.euler.x / 2), sin(transform.euler.x / 2) * 1, 0, 0);
+	rot *= glm::quat(cos(transform.euler.y / 2), 0, sin(transform.euler.y / 2) * 1, 0);
+
+	transform.rotation = rot;
+
+	transform.up = glm::rotate(transform.rotation, m_upVectorOrigin);
+	transform.forward = glm::rotate(transform.rotation, m_lookAtOrigin);
+
+	currentTransform = glm::scale(identity, transform.scale) * currentTransform;
+	currentTransform = glm::toMat4(rot) * currentTransform;
+	currentTransform = glm::translate(identity, transform.position) * currentTransform;
+	
+	if (m_parent != NULL)
+	{
+		currentTransform = m_parent->transform.model * currentTransform;
+	}
+
+	transform.model = currentTransform;
+}

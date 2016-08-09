@@ -79,18 +79,19 @@ float GetFogFactor(FogParameters params, float fogCoord);
 
 void main()
 {
+	vec3 norm = normalize(Normal);
 	vec3 viewDir = normalize(viewPos.xyz - WorldPos.xyz);
 
-	vec4 result = CalcDirLight(directionalLight, Normal, viewDir);
+	vec4 result = CalcDirLight(directionalLight, norm, viewDir);
 
 	for(int i = 0; i < numPointLights; i++)
 	{
-		result += CalcPointLight(pointLights[i], Normal, WorldPos, viewDir);
+		result += CalcPointLight(pointLights[i], norm, WorldPos, viewDir);
 	}
 
 	for(int i = 0; i < numSpotLights; i++)
 	{
-		result += CalcSpotLight(spotLights[i], Normal, WorldPos, viewDir);
+		result += CalcSpotLight(spotLights[i], norm, WorldPos, viewDir);
 	}
 	
 	outputColor = result * Color;

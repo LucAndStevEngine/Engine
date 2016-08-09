@@ -136,8 +136,8 @@ bool Texture::LoadTexture2D(std::string path, bool bGenerateMipMaps)
 void Texture::BindTexture(int textureUnit)
 {
 	glActiveTexture(GL_TEXTURE0 + textureUnit);
-	glBindTextures(0, 1, &m_textureID);
-	glBindSamplers(0, 1, &m_samplerID);
+	glBindTexture(GL_TEXTURE_2D, m_textureID);
+	glBindSampler(textureUnit, m_samplerID);
 }
 
 void Texture::SetFiltering(int magnification, int minification)

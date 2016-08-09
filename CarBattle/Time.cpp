@@ -1,11 +1,13 @@
 #include "Time.h"
 
 float Time::deltaTime = 0;
+float Time::fixedDeltaTime = 0.01666666666f;
 float Time::elapsedTime = 0;
 float Time::m_lastFrameTime = 0;
 int Time::FPS = 0;
 int Time::frameCount = 0;
 float Time::frameTime = 0;
+float Time::m_fixedTime = 0;
 
 
 void Time::UpdateTime(float time)
@@ -17,6 +19,7 @@ void Time::UpdateTime(float time)
 
 	deltaTime = time - m_lastFrameTime;
 	elapsedTime += deltaTime;
+	m_fixedTime += deltaTime;
 
 	frameCount++;
 	frameTime += deltaTime;
