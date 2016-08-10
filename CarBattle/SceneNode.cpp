@@ -1,6 +1,6 @@
 #include "SceneNode.h"
-
-
+#include "Game.h"
+#include "Component.h"
 
 SceneNode::SceneNode()
 {
@@ -8,7 +8,6 @@ SceneNode::SceneNode()
 	m_upVectorOrigin = transform.up;
 	Init();
 }
-
 
 SceneNode::~SceneNode()
 {
@@ -57,6 +56,7 @@ void SceneNode::RemoveParent()
 void SceneNode::SetParent(SceneNode* node)
 {
 	node->AddChild(this);
+	m_game = node->m_game;
 }
 
 void SceneNode::RemoveChild(SceneNode* node)
@@ -79,11 +79,33 @@ std::vector<SceneNode*> SceneNode::GetChildren()
 }
 
 
-
-
 SceneNode* SceneNode::GetParent()
 {
 	return m_parent;
+}
+
+void SceneNode::AddComponent(Component *comp)
+{
+	m_components.push_back(comp);
+	comp->sceneNode = this;
+}
+
+void SceneNode::RemoveComponent(Component *comp)
+{
+	for (int i = 0; i < m_components.size(); i++)
+	{
+		if (m_components[i] == comp)
+		{
+			m_components[i] = NULL;
+			m_components.erase(m_components.begin() + i);
+			break;
+		}
+	}
+}
+
+std::vector<Component*> SceneNode::GetComponent()
+{
+	return m_components;
 }
 
 void SceneNode::TraverseGraph(void(SceneNode::*ptr)())
@@ -102,16 +124,29 @@ void SceneNode::TraverseGraph(void(SceneNode::*ptr)())
 
 void SceneNode::Init()
 {
+	for (int i = 0; i < m_components.size(); i++)
+	{
+		m_components[i]->Init();
+	}
+	UpdateTransform();
 }
 
 void SceneNode::Update() 
 {
+	for (int i = 0; i < m_components.size(); i++)
+	{
+		m_components[i]->Update();
+	}
+
 	UpdateTransform();
 }
 
 void SceneNode::FixedUpdate()
 {
-
+	for (int i = 0; i < m_components.size(); i++)
+	{
+		m_components[i]->FixedUpdate();
+	}
 }
 
 void SceneNode::UpdateTransform()
@@ -139,4 +174,10 @@ void SceneNode::UpdateTransform()
 	}
 
 	transform.model = currentTransform;
+}
+
+
+Game* SceneNode::GetGame()
+{
+	return m_game;
 }

@@ -1,10 +1,11 @@
 #include "SceneGraph.h"
+#include "Game.h"
 
 
-
-SceneGraph::SceneGraph() 
+SceneGraph::SceneGraph(Game* game)
 {
 	root = new SceneNode();
+	root->m_game = game;
 }
 
 
@@ -25,6 +26,8 @@ void SceneGraph::FixedUpdate()
 
 void SceneGraph::ClearGraph()
 {
+	Game* game = root->m_game;
 	delete root;
 	root = new SceneNode();
+	root->m_game = game;
 }

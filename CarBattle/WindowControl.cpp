@@ -48,7 +48,13 @@ bool WindowControl::InitWindow(const char* windowName, int width, int height, in
 	this->game = game;
 	game->Init(this);
 
+	gameRunning = true;
+	update = std::thread(&WindowControl::Update, this);
+
 	Loop();
+
+	gameRunning = false;
+	update.join();
 
 	game->Shutdown();
 	ShutdownWindow();
@@ -83,26 +89,27 @@ void WindowControl::Loop()
 {
 	while (!glfwWindowShouldClose(m_window))
 	{
-		Time::UpdateTime(glfwGetTime());
 		// Check call events
 		glfwPollEvents();
+		
+		Render();
+	}	
+}
 
-		Update();
+void WindowControl::Update()
+{
+	while (gameRunning)
+	{
+		Time::UpdateTime(glfwGetTime());
+		game->Update();
 
-		while(Time::m_fixedTime >= Time::fixedDeltaTime)
+		while (Time::m_fixedTime >= Time::fixedDeltaTime)
 		{
 			FixedUpdate();
 			Time::m_fixedTime -= Time::fixedDeltaTime;
 		}
 
-		Render();
 	}
-	
-}
-
-void WindowControl::Update()
-{
-	game->Update();
 }
 
 void WindowControl::FixedUpdate()

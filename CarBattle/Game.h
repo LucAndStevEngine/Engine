@@ -5,6 +5,7 @@
 #include <vector>
 #include "Shader.h"
 #include "SceneGraph.h"
+#include "RenderingManager.h"
 
 class Game
 {
@@ -20,15 +21,17 @@ public:
 
 	int GetWindowHeight();
 	int GetWindowWidth();
-
+	
+	SceneGraph* sceneGraph;
 protected:
 	std::vector<ShaderProgram*> programs;
 	std::vector<Shader*> shaders;
 
 	class WindowControl* windowControl;
-	SceneGraph* sceneGraph;
 	virtual void Shutdown();
 	virtual ~Game();
+	RenderingManager renderingManager;
+	
 private:
 	class Skybox* skybox;
 	class Camera* camera;

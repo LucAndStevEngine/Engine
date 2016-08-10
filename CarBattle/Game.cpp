@@ -8,12 +8,14 @@
 #include "Light.h"
 #include "Camera.h"
 #include "AssimpModel.h"
+#include "ModelRenderer.h"
 
 AssimpModel model;
 SceneNode* first;
-SceneNode* second;
+ModelRenderer* modelRender;
 
 DirectionalLight dLight;
+PointLight pLight;
 
 Game::Game()
 {
@@ -61,7 +63,7 @@ void Game::Init(WindowControl* windowControl)
 	skybox = new Skybox();
 	skybox->LoadSkybox("skyboxes/", "jajlands1_ft.jpg", "jajlands1_bk.jpg", "jajlands1_lf.jpg", "jajlands1_rt.jpg", "jajlands1_up.jpg", "jajlands1_dn.jpg");
 
-	sceneGraph = new SceneGraph();
+	sceneGraph = new SceneGraph(this);
 	camera = new Camera();
 	camera->transform.position.z = -1;
 	sceneGraph->root->AddChild(camera);
@@ -71,11 +73,17 @@ void Game::Init(WindowControl* windowControl)
 
 	first = new SceneNode();
 	first->transform.scale = glm::vec3(0.001f);
+	first->transform.position.z = 0;
 	sceneGraph->root->AddChild(first);
+	
+	pLight.diffuse = glm::vec3(1, 0, 0);
 
-	second = new SceneNode();
-	first->AddChild(second);
-	second->transform.position.z = 1000;
+	modelRender = new ModelRenderer(&model, programs[1]);
+
+	first->AddComponent(modelRender);
+
+	renderingManager.AddRenderComp(modelRender);
+
 	
 }
 
@@ -113,15 +121,14 @@ void Game::FixedUpdate()
 
 void Game::Render()
 {
-	programs[0]->UseProgram();
-	programs[0]->SetUniform("projection", glm::perspective(45.0f, (float)(GetWindowWidth()/GetWindowHeight()), 0.01f, 10000.0f));
-	programs[0]->SetUniform("view", glm::translate(camera->LookAt(), camera->transform.position));
-	programs[0]->SetUniform("model", glm::mat4());
-	programs[0]->SetUniform("color", glm::vec4(1, 1, 1, 1));
+	//programs[0]->UseProgram();
+	//programs[0]->SetUniform("projection", glm::perspective(45.0f, (float)(GetWindowWidth()/GetWindowHeight()), 0.01f, 10000.0f));
+	//programs[0]->SetUniform("view", glm::translate(camera->LookAt(), camera->transform.position));
+	//programs[0]->SetUniform("model", glm::mat4());
+	//programs[0]->SetUniform("color", glm::vec4(1, 1, 1, 1));
 
-	programs[0]->SetUniform("fog.enabled", false);
-	skybox->Render();
-
+	//programs[0]->SetUniform("fog.enabled", false);
+	//skybox->Render();
 
 	programs[1]->UseProgram();
 	programs[1]->SetUniform("diffuse", 0);
@@ -129,18 +136,12 @@ void Game::Render()
 	programs[1]->SetUniform("projection", glm::perspective(45.0f, (float)(GetWindowWidth() / GetWindowHeight()), 0.01f, 10000.0f));
 	programs[1]->SetUniform("view", camera->LookAt());
 	programs[1]->SetUniform("viewPos", camera->transform.position);
-	programs[1]->SetUniform("model", first->transform.model);
 	programs[1]->SetUniform("fog.enabled", false);
 	dLight.SendToShader(*programs[1]);
-
-	model.BindModelsVAO();
-	model.RenderModel();
+	programs[1]->SetUniform("numPointLights", 1);
+	pLight.SendToShader(*programs[1]);
 	
-	programs[1]->SetUniform("model", first->transform.model);
-	programs[1]->SetUniform("model", second->transform.model);
-	model.RenderModel();
-
-
+	renderingManager.RenderScene();
 }
 
 void Game::Shutdown()

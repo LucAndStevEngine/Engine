@@ -3,8 +3,11 @@
 #include <vector>
 #include "AssimpModel.h"
 
+class Component;
+
 class SceneNode
 {
+	friend class SceneGraph;
 public:
 	// the current transform of the object
 	Transform transform;
@@ -29,17 +32,23 @@ public:
 	void RemoveParent();
 	SceneNode* GetParent();
 
+	// Component Management
+	void AddComponent(Component* node);
+	void RemoveComponent(Component* node);
+	std::vector<Component*> GetComponent();
+
 	// Traverse the scene Graph through this function
 	void TraverseGraph(void (SceneNode::*ptr)());
-		
+
+	class Game* GetGame();
 protected:
 	// Updates the current transform of the sceneNode
 	void UpdateTransform();
 
 	SceneNode* m_parent;
 	std::vector<SceneNode*> m_children;
-
-	//std::vector<class Component*> m_components;
+	class Game* m_game;
+	std::vector<Component*> m_components;
 	
 private:
 	//Origin look and upvector of the sceneNode

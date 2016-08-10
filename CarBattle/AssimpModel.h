@@ -30,7 +30,8 @@ public:
 	void RenderModelBumpMap(ShaderProgram* program);
 
 	AssimpModel();
-	
+	unsigned int GetVAO();
+
 private:
 
 	bool m_bIsLoaded;

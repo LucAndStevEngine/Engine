@@ -257,5 +257,7 @@ AssimpModel::AssimpModel()
 	m_bIsLoaded = false;
 }
 
-
-
+unsigned int AssimpModel::GetVAO()
+{
+	return m_VAO;
+}

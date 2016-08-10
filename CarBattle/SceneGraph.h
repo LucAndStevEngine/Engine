@@ -5,7 +5,7 @@
 class SceneGraph
 {
 public:
-	SceneGraph();
+	SceneGraph(class Game* game);
 	virtual ~SceneGraph();
 
 	SceneNode* root;

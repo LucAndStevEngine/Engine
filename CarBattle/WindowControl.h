@@ -6,6 +6,9 @@
 // GLFW Include
 #include <GLFW\glfw3.h>
 
+// Threading
+#include <thread>
+
 #pragma once
 class WindowControl
 {
@@ -43,5 +46,8 @@ private:
 	int m_screenHeight = 0;
 
 	class Game* game;
+
+	std::thread update;
+	bool gameRunning;
 };
 
