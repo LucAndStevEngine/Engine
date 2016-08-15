@@ -32,6 +32,7 @@ public:
 	AssimpModel();
 	unsigned int GetVAO();
 
+	float farthestPoint = 0;	
 private:
 
 	bool m_bIsLoaded;

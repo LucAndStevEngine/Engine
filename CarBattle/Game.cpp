@@ -9,10 +9,13 @@
 #include "Camera.h"
 #include "AssimpModel.h"
 #include "ModelRenderer.h"
+#include "ResourceManager.h"
 
 AssimpModel model;
 SceneNode* first;
-ModelRenderer* modelRender;
+SceneNode* two;
+SceneNode* three;
+SceneNode* four;
 
 DirectionalLight dLight;
 PointLight pLight;
@@ -26,6 +29,7 @@ void Game::Init(WindowControl* windowControl)
 {
 	this->windowControl = windowControl;
 
+	renderingManager = new RenderingManager();
 	glEnable(GL_DEPTH_TEST);
 	glClearDepth(1.0);
 	glEnable(GL_TEXTURE_2D);
@@ -52,6 +56,7 @@ void Game::Init(WindowControl* windowControl)
 	program->AddShaderToProgram(shaders[1]);
 	program->LinkProgram();
 	programs.push_back(program);
+	ResourceManager::SaveShader(program, "Skybox");
 
 	program = new ShaderProgram();
 	program->CreateProgram();
@@ -59,14 +64,21 @@ void Game::Init(WindowControl* windowControl)
 	program->AddShaderToProgram(shaders[3]);
 	program->LinkProgram();
 	programs.push_back(program);
-
-	skybox = new Skybox();
-	skybox->LoadSkybox("skyboxes/", "jajlands1_ft.jpg", "jajlands1_bk.jpg", "jajlands1_lf.jpg", "jajlands1_rt.jpg", "jajlands1_up.jpg", "jajlands1_dn.jpg");
+	ResourceManager::SaveShader(program, "Default");
 
 	sceneGraph = new SceneGraph(this);
+
+	skybox = new Skybox();
+	sceneGraph->root->AddChild(skybox);
+	skybox->LoadSkybox("skyboxes/", "jajlands1_ft.jpg", "jajlands1_bk.jpg", "jajlands1_lf.jpg", "jajlands1_rt.jpg", "jajlands1_up.jpg", "jajlands1_dn.jpg");
+
 	camera = new Camera();
 	camera->transform.position.z = -1;
 	sceneGraph->root->AddChild(camera);
+	
+	cameraTwo = new Camera();
+	cameraTwo->transform.position.z = 5;
+	sceneGraph->root->AddChild(cameraTwo);
 
 	model.LoadModelFromFile("models/BMW_M3_GTR/BMW_M3_GTR.obj");
 	model.FinalizeVBO();
@@ -78,39 +90,81 @@ void Game::Init(WindowControl* windowControl)
 	
 	pLight.diffuse = glm::vec3(1, 0, 0);
 
-	modelRender = new ModelRenderer(&model, programs[1]);
+	ModelRenderer* firstRenderer;
+	firstRenderer = new ModelRenderer(&model, programs[1]);
 
-	first->AddComponent(modelRender);
+	first->AddComponent(firstRenderer);
 
-	renderingManager.AddRenderComp(modelRender);
+	two = new SceneNode();
+	two->transform.scale = glm::vec3(0.001f);
+	two->transform.position.z = 0;
+	sceneGraph->root->AddChild(two);
+
+	ModelRenderer* secondRenderer;
+	secondRenderer = new ModelRenderer(&model, programs[1]);
+	two->AddComponent(secondRenderer);
+
+	two->transform.position.z = -100;
+	//first = new SceneNode();
+	//first->transform.scale = glm::vec3(0.001f);
+	//first->transform.position.z = 0;
+	//sceneGraph->root->AddChild(first);
+
+	//pLight.diffuse = glm::vec3(1, 0, 0);
+
+	//first->AddComponent(modelRender);
+	//first->transform.position.z = -100;
+
+	//first = new SceneNode();
+	//first->transform.scale = glm::vec3(0.001f);
+	//first->transform.position.z = 0;
+	//sceneGraph->root->AddChild(first);
+
+	//pLight.diffuse = glm::vec3(1, 0, 0);
+
+	//first->AddComponent(modelRender);
+
+	//first->transform.position.x = -400;
 
 	
 }
 
 void Game::Update()
 {
-	if (InputManager::Instance().KeyPress(GLFW_KEY_A))
+
+
+	if (glfwJoystickPresent(GLFW_JOYSTICK_1))
 	{
-		camera->transform.euler.y += Time::deltaTime;
+		std::cout << "Joystick there" << std::endl;
+
+		int count[4];
+		const float* axes[4];
+		axes[0] = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &count[0]);
+
+		if (axes[0][1] < -0.1f)
+		{
+			cameraTwo->transform.position += cameraTwo->transform.forward * Time::deltaTime * 20.0f;
+		}
+		else if (axes[0][1] > 0.1f)
+		{
+			cameraTwo->transform.position -= cameraTwo->transform.forward * Time::deltaTime * 20.0f;
+		}
+		if (axes[0][0] < -0.1f)
+		{
+			cameraTwo->transform.euler.y -= Time::deltaTime;
+		}
+		else if (axes[0][0] > 0.1f)
+		{
+			cameraTwo->transform.euler.y += Time::deltaTime;
+		}
+	}
+	else
+	{
+		std::cout << "no " << std::endl;
 	}
 
-	if (InputManager::Instance().KeyPress(GLFW_KEY_D))
-	{
-		camera->transform.euler.y -= Time::deltaTime;
-	}
-
-	if (InputManager::Instance().KeyPress(GLFW_KEY_W))
-	{
-		camera->transform.position += camera->transform.forward * Time::deltaTime;
-	}
-
-	if (InputManager::Instance().KeyPress(GLFW_KEY_S))
-	{
-		camera->transform.position -= camera->transform.forward * Time::deltaTime;
-	}
 
 	sceneGraph->Update();
-	std::cout << "FPS -  " << Time::FPS << std::endl;
 }	
 
 void Game::FixedUpdate()
@@ -121,27 +175,44 @@ void Game::FixedUpdate()
 
 void Game::Render()
 {
-	//programs[0]->UseProgram();
-	//programs[0]->SetUniform("projection", glm::perspective(45.0f, (float)(GetWindowWidth()/GetWindowHeight()), 0.01f, 10000.0f));
-	//programs[0]->SetUniform("view", glm::translate(camera->LookAt(), camera->transform.position));
-	//programs[0]->SetUniform("model", glm::mat4());
-	//programs[0]->SetUniform("color", glm::vec4(1, 1, 1, 1));
+	glViewport(0, 0, windowControl->GetWidth()/2, windowControl->GetHeight());
+	ShaderProgram* program = ResourceManager::GetShader("Skybox");
+	program->UseProgram();
+	glm::mat4 proj = glm::perspective(45.0f, ((float)GetWindowWidth()/2) / (float)GetWindowHeight(), 0.01f, 1000.0f);
+	program->SetUniform("projection", proj);
+	program->SetUniform("view", glm::translate(camera->LookAt(), camera->transform.position));
+	program->SetUniform("model", glm::mat4());
+	program->SetUniform("color", glm::vec4(1, 1, 1, 1));
 
-	//programs[0]->SetUniform("fog.enabled", false);
-	//skybox->Render();
+	program->SetUniform("fog.enabled", false);
 
-	programs[1]->UseProgram();
-	programs[1]->SetUniform("diffuse", 0);
-	programs[1]->SetUniform("specular", 2);
-	programs[1]->SetUniform("projection", glm::perspective(45.0f, (float)(GetWindowWidth() / GetWindowHeight()), 0.01f, 10000.0f));
-	programs[1]->SetUniform("view", camera->LookAt());
-	programs[1]->SetUniform("viewPos", camera->transform.position);
-	programs[1]->SetUniform("fog.enabled", false);
-	dLight.SendToShader(*programs[1]);
-	programs[1]->SetUniform("numPointLights", 1);
-	pLight.SendToShader(*programs[1]);
+	program = ResourceManager::GetShader("Default");
+	program->UseProgram();
+	program->SetUniform("diffuse", 0);
+	program->SetUniform("specular", 2);
+	program->SetUniform("projection", proj);
+	program->SetUniform("view", camera->LookAt());
+	program->SetUniform("viewPos", camera->transform.position);
+	program->SetUniform("fog.enabled", false);
+	dLight.SendToShader(*program);
+	program->SetUniform("numPointLights", 1);
+	pLight.SendToShader(*program);
 	
-	renderingManager.RenderScene();
+	renderingManager->frustum.CreateFrustum(camera->transform, 0.01f, 1000.0f, ((float)GetWindowWidth() / 2) / (float)GetWindowHeight(), 45.0f);
+	renderingManager->RenderScene();
+
+
+	glViewport(windowControl->GetWidth() / 2, 0, windowControl->GetWidth() / 2, windowControl->GetHeight());
+	program = ResourceManager::GetShader("Skybox");
+	program->UseProgram();
+	program->SetUniform("view", glm::translate(cameraTwo->LookAt(), cameraTwo->transform.position));
+
+	program = ResourceManager::GetShader("Default");
+	program->UseProgram();
+	program->SetUniform("view", cameraTwo->LookAt());
+	program->SetUniform("viewPos", cameraTwo->transform.position);
+	renderingManager->frustum.CreateFrustum(cameraTwo->transform, 0.01f, 1000.0f, ((float)GetWindowWidth() / 2) / (float)GetWindowHeight(), 45.0f);
+	renderingManager->RenderScene();
 }
 
 void Game::Shutdown()
@@ -159,6 +230,11 @@ int Game::GetWindowHeight()
 int Game::GetWindowWidth()
 {
 	return windowControl->GetWidth();
+}
+
+RenderingManager* Game::GetRenderManager()
+{
+	return renderingManager;
 }
 
 Game::~Game()

@@ -123,6 +123,12 @@
     <ClCompile Include="ModelRenderer.cpp">
       <Filter>Source Files\Component\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="FrustumCulling.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyboxRenderer.cpp">
+      <Filter>Source Files\Component\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InputManager.h">
@@ -189,6 +195,12 @@
       <Filter>Header Files\Components\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="ModelRenderer.h">
+      <Filter>Header Files\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="FrustumCulling.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SkyboxRenderer.h">
       <Filter>Header Files\Components\Rendering</Filter>
     </ClInclude>
   </ItemGroup>

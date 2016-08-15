@@ -2,8 +2,8 @@
 
 #include "Shader.h"
 #include <list>
-
-class RenderComponent;
+#include "RenderComponent.h"
+#include "FrustumCulling.h"
 
 class RenderingManager
 {
@@ -15,10 +15,12 @@ public:
 
 	void RenderScene();
 
+	std::list<RenderComponent*> renderers;
+
+	FrustumCulling frustum;
 protected:
 	static unsigned int m_currentVAO;
 	static ShaderProgram* m_currentShader;
 private:
-	std::list<RenderComponent*> renderers;	
 };
 

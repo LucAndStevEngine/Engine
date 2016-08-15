@@ -1,4 +1,5 @@
 #include "Skybox.h"
+#include "ResourceManager.h"
 
 #include "glm\glm.hpp"
 
@@ -84,19 +85,22 @@ void Skybox::LoadSkybox(std::string directory, std::string front, std::string ba
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(glm::vec3) + sizeof(glm::vec2), (void*)(sizeof(glm::vec3) + sizeof(glm::vec2)));
 	glBindVertexArray(0);
+
+	m_skyBoxRender = new SkyboxRenderer();
+	m_skyBoxRender->SetVAO(m_VAO);
+	m_skyBoxRender->SetShader(ResourceManager::GetShader("Skybox"));
+	m_skyBoxRender->sceneNode = this;
+	m_skyBoxRender->m_skybox = this;
+	m_skyBoxRender->Init();
 }
 
 void Skybox::Render()
 {
-	glDepthMask(0);
-	glBindVertexArray(m_VAO);
 	for (int i = 0; i < 6; i++)
 	{
-		m_Textures[i].BindTexture();
+		m_Textures[i].BindTexture(0);
 		glDrawArrays(GL_TRIANGLE_STRIP, i * 4, 4);
 	}
-	glBindVertexArray(0);
-	glDepthMask(1);
 }
 
 void Skybox::ReleaseSkybox()

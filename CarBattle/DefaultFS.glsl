@@ -2,7 +2,7 @@
 
 in vec2 TexCoord;
 in vec3 Normal;
-in vec4 EyeSpace;
+in vec4 ModelView;
 in vec3 WorldPos;
 in vec4 Color;
 
@@ -98,7 +98,7 @@ void main()
 
 	if(fog.enabled)
 	{
-		float fogCoord = abs(EyeSpace.z / EyeSpace.w);
+		float fogCoord = abs(ModelView.z / ModelView.w);
 		outputColor = mix(outputColor, fog.fogColor, GetFogFactor(fog, fogCoord));
 	}
 }

@@ -1,6 +1,7 @@
 #include "RenderComponent.h"
-
-
+#include "Game.h"
+#include "SceneNode.h"
+#include "RenderingManager.h"
 
 RenderComponent::RenderComponent()
 {
@@ -37,6 +38,10 @@ unsigned int RenderComponent::GetVAO()
 	return m_VAO_ID;
 }
 
+void RenderComponent::Init()
+{
+	sceneNode->GetGame()->GetRenderManager()->AddRenderComp(this);
+}
 
 void RenderComponent::Render()
 {

@@ -18,6 +18,11 @@ public:
 	virtual void Render();
 	virtual ~RenderComponent();
 	
+	void Init() override;
+
+	float radius = 0;
+	bool bAlwaysDraw = false;
+
 protected:
 	ShaderProgram* m_shader;
 	unsigned int m_VAO_ID;

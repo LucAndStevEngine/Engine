@@ -12,19 +12,19 @@ uniform mat4 model;
 out vec2 TexCoord;
 out vec3 Normal;
 out vec4 Color;
-out vec4 EyePos;
+out vec4 ModelView;
 out vec3 WorldPos;
 
 void main()
 {
-	vec4 eyeSpacePos = view * model * vec4(position, 1.0f);
-	gl_Position = projection * eyeSpacePos;//view * model * vec4(position, 1.0f);
+	vec4 modelView = view * model * vec4(position, 1.0f);
+	gl_Position = projection * modelView;//view * model * vec4(position, 1.0f);
 	TexCoord = texCoord;
 
 	vec4 vRes = transpose(inverse(model)) * vec4(normal, 0.0f);
 	Normal = vRes.xyz;
 
-	EyePos = eyeSpacePos;
+	ModelView = modelView;
 	Color = color;
 
 	WorldPos = vec3(model * vec4(position, 1.0f));

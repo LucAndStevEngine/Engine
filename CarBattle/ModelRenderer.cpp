@@ -7,6 +7,7 @@ ModelRenderer::ModelRenderer(AssimpModel* model)
 	if (model != NULL)
 	{
 		m_VAO_ID = model->GetVAO();
+		radius = model->farthestPoint;
 	}
 }
 
@@ -16,6 +17,7 @@ ModelRenderer::ModelRenderer(AssimpModel * model, ShaderProgram * shader) : Rend
 	if (model != NULL)
 	{
 		m_VAO_ID = model->GetVAO();
+		radius = model->farthestPoint;
 	}
 }
 
@@ -29,6 +31,7 @@ void ModelRenderer::SetModel(AssimpModel *model)
 	if (model != NULL)
 	{
 		m_VAO_ID = model->GetVAO();
+		radius = model->farthestPoint;
 	}
 }
 

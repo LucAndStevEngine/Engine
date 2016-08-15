@@ -67,6 +67,18 @@ bool AssimpModel::LoadModelFromFile(char* filePath)
 			{
 			
 				aiVector3D pos = mesh->mVertices[face.mIndices[k]];
+				if (abs(pos.x) > farthestPoint)
+				{
+					farthestPoint = abs(pos.x);
+				}
+				if (abs(pos.y) > farthestPoint)
+				{
+					farthestPoint = abs(pos.y);
+				}
+				if (abs(pos.z) > farthestPoint)
+				{
+					farthestPoint = abs(pos.z);
+				}
 				aiVector3D uv;
 				if (mesh->HasTextureCoords(0))
 				{
@@ -221,13 +233,6 @@ void AssimpModel::RenderModel()
 	int numMeshes = m_meshSizes.size();
 	for (int i = 0; i < numMeshes; i++)
 	{
-		for (int j = 0; j <= SPECULAR; j++)
-		{
-			glActiveTexture(GL_TEXTURE0 + j);
-			glBindTexture(GL_TEXTURE_2D, 0);
-			glBindSampler(j, 0);
-		}
-
 		int iMatIndex = m_materialIndices[i];
 		if (iMatIndex < m_textures.size())
 		{
@@ -236,14 +241,6 @@ void AssimpModel::RenderModel()
 			tex.BindTexture(type);
 		}
 		glDrawArrays(GL_TRIANGLES, m_meshStartIndices[i], m_meshSizes[i]);
-
-
-		for (int j = 0; j <= SPECULAR; j++)
-		{
-			glActiveTexture(GL_TEXTURE0 + j);
-			glBindTexture(GL_TEXTURE_2D, 0);
-			glBindSampler(j, 0);
-		}
 	}
 
 }

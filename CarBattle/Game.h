@@ -23,6 +23,8 @@ public:
 	int GetWindowWidth();
 	
 	SceneGraph* sceneGraph;
+
+	RenderingManager* GetRenderManager();
 protected:
 	std::vector<ShaderProgram*> programs;
 	std::vector<Shader*> shaders;
@@ -30,10 +32,11 @@ protected:
 	class WindowControl* windowControl;
 	virtual void Shutdown();
 	virtual ~Game();
-	RenderingManager renderingManager;
+	RenderingManager *renderingManager;
 	
 private:
 	class Skybox* skybox;
 	class Camera* camera;
+	class Camera* cameraTwo;
 };
 

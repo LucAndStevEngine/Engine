@@ -42,6 +42,7 @@ void SceneNode::AddChild(SceneNode* node)
 		node->RemoveParent();
 	}
 	node->m_parent = this;
+	node->m_game = m_game;
 }
 
 void SceneNode::RemoveParent()
@@ -88,6 +89,7 @@ void SceneNode::AddComponent(Component *comp)
 {
 	m_components.push_back(comp);
 	comp->sceneNode = this;
+	comp->Init();
 }
 
 void SceneNode::RemoveComponent(Component *comp)
