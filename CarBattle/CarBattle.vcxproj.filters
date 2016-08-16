@@ -114,20 +114,23 @@
     <ClCompile Include="RenderingManager.cpp">
       <Filter>Source Files\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RenderComponent.cpp">
       <Filter>Source Files\Component\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="ModelRenderer.cpp">
       <Filter>Source Files\Component\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="FrustumCulling.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SkyboxRenderer.cpp">
       <Filter>Source Files\Component\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsManager.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Source Files\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="FrustumCulling.cpp">
+      <Filter>Source Files\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,11 +200,14 @@
     <ClInclude Include="ModelRenderer.h">
       <Filter>Header Files\Components\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="FrustumCulling.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SkyboxRenderer.h">
       <Filter>Header Files\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsManager.h">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="FrustumCulling.h">
+      <Filter>Header Files\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

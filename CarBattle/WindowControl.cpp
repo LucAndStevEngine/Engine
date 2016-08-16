@@ -9,6 +9,7 @@ int WindowControl::m_screenWidth = 0;
 int WindowControl::m_screenHeight = 0;
 WindowControl::WindowControl()
 {
+
 }
 
 bool WindowControl::InitWindow(const char* windowName, int width, int height, int versionMajor, int versionMinor, bool resizableWindow, Game* game)

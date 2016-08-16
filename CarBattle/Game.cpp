@@ -20,6 +20,9 @@ SceneNode* four;
 DirectionalLight dLight;
 PointLight pLight;
 
+btRigidBody* carBody;
+btTransform carTrans;
+btRigidBody* body;
 Game::Game()
 {
 
@@ -30,6 +33,11 @@ void Game::Init(WindowControl* windowControl)
 	this->windowControl = windowControl;
 
 	renderingManager = new RenderingManager();
+
+	physicsManager = new PhysicsManager();
+	physicsManager->SetGravity(&btVector3(0, -20, 0));
+	physicsManager->Init();
+
 	glEnable(GL_DEPTH_TEST);
 	glClearDepth(1.0);
 	glEnable(GL_TEXTURE_2D);
@@ -95,16 +103,6 @@ void Game::Init(WindowControl* windowControl)
 
 	first->AddComponent(firstRenderer);
 
-	two = new SceneNode();
-	two->transform.scale = glm::vec3(0.001f);
-	two->transform.position.z = 0;
-	sceneGraph->root->AddChild(two);
-
-	ModelRenderer* secondRenderer;
-	secondRenderer = new ModelRenderer(&model, programs[1]);
-	two->AddComponent(secondRenderer);
-
-	two->transform.position.z = -100;
 	//first = new SceneNode();
 	//first->transform.scale = glm::vec3(0.001f);
 	//first->transform.position.z = 0;
@@ -125,34 +123,54 @@ void Game::Init(WindowControl* windowControl)
 	//first->AddComponent(modelRender);
 
 	//first->transform.position.x = -400;
-
 	
+	btCollisionShape* carBox = new btBoxShape(btVector3(20, 5, 10));
+	carTrans.setIdentity();
+	glm::vec3 pos = first->transform.position;
+	carTrans.setOrigin(btVector3(pos.x, pos.y, pos.z));
+	btScalar mass(50.0f);
+	btVector3 localInertia(1, 1, 1);
+	carBox->calculateLocalInertia(mass, localInertia);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(carTrans);
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, carBox, localInertia);
+	body = new btRigidBody(rbInfo);
+
+	physicsManager->AddCollisionShape(body);
+
 }
 
 void Game::Update()
 {
 
-	bool press = InputManager::Instance().GetJoyStickButtonPress(GLFW_JOYSTICK_1, 0);
-	bool otherPress = InputManager::Instance().GetJoyStickButtonDown(GLFW_JOYSTICK_1, 1);
-	
+	bool press = InputManager::Instance().GetJoyStickButtonDown(GLFW_JOYSTICK_1, 0);
 
 	float axis = InputManager::Instance().GetJoyStickAxis(GLFW_JOYSTICK_1, 1);
 	if (press)
 	{
-		windowControl->ResizeWindow(1080,720);
-	}
-	if (otherPress)
-	{
-		windowControl->ResizeWindow(800, 600);
+		camera->transform.position -= camera->transform.forward * Time::deltaTime * 20.0f;
 	}
 
 	sceneGraph->Update();
+
+	glm::quat rot = first->transform.rotation;
+	carTrans.setRotation(btQuaternion(rot.x, rot.y, rot.z, rot.w));
 }	
 
 void Game::FixedUpdate()
 {
 	sceneGraph->FixedUpdate();
-	first->transform.euler.y += Time::fixedDeltaTime;
+	physicsManager->Update();
+
+	btTransform trans;
+	if (body && body->getMotionState())
+	{
+		body->getMotionState()->getWorldTransform(trans);
+	}
+	
+	first->transform.position.x = trans.getOrigin().getX();
+	first->transform.position.y = trans.getOrigin().getY();
+	first->transform.position.z = trans.getOrigin().getZ();
 }
 
 void Game::Render()

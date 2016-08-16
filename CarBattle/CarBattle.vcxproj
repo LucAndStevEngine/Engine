@@ -28,6 +28,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="ModelRenderer.cpp" />
+    <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="RenderingManager.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -53,6 +54,7 @@
     <ClInclude Include="Light.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="ModelRenderer.h" />
+    <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="RenderingManager.h" />
     <ClInclude Include="resource.h" />
@@ -77,6 +79,17 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CarBattle.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\BulletCollision\BulletCollision.vcxproj">
+      <Project>{272e3d1b-bcd4-327e-bf3a-15f2e6770e88}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\src\BulletDynamics\BulletDynamics.vcxproj">
+      <Project>{21aa74a6-6e0a-30bb-a84c-b5a18590845a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\src\LinearMath\LinearMath.vcxproj">
+      <Project>{96db8907-4cc2-3e4f-b409-4bb8c52ff301}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DDAD0022-2E86-4B02-BE0C-41DB4758E0EC}</ProjectGuid>
@@ -134,7 +147,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../includes;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../includes;../src</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>

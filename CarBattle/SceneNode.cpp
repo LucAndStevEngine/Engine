@@ -155,6 +155,8 @@ void SceneNode::UpdateTransform()
 {
 	glm::mat4 identity;
 	glm::mat4 currentTransform;
+
+
 	glm::quat rot;
 
 	rot *= glm::quat(cos(transform.euler.z / 2), 0, 0, sin(transform.euler.z / 2) * 1);
@@ -183,3 +185,8 @@ Game* SceneNode::GetGame()
 {
 	return m_game;
 }
+
+/// TODO
+/// MAKE GETTERS AND SETTERS FOR POSITON AND ROTATION
+/// USED FOR RIGIDBODIES AND COLLISION SHTUFF
+/// Luc Vo - "Better than Firas!" - 4:00P.M August, Tuesday 16, 2016
