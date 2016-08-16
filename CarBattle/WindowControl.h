@@ -38,12 +38,12 @@ private:
 	static void MouseCallback(GLFWwindow* window, double xpos, double ypos);
 	static void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 	static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
-
+	static void MaximizeCallBack(GLFWwindow* window, int width, int height);
 
 	GLFWwindow* m_window;
 
-	int m_screenWidth = 0;
-	int m_screenHeight = 0;
+	static int m_screenWidth;
+	static int m_screenHeight;
 
 	class Game* game;
 

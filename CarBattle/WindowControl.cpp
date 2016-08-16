@@ -5,6 +5,8 @@
 
 #include "Time.h"
 
+int WindowControl::m_screenWidth = 0;
+int WindowControl::m_screenHeight = 0;
 WindowControl::WindowControl()
 {
 }
@@ -32,6 +34,7 @@ bool WindowControl::InitWindow(const char* windowName, int width, int height, in
 	glfwSetCursorPosCallback(m_window, MouseCallback);
 	glfwSetScrollCallback(m_window, ScrollCallback);
 	glfwSetMouseButtonCallback(m_window, MouseButtonCallback);
+	glfwSetWindowSizeCallback(m_window, MaximizeCallBack);
 	
 	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	glfwSetInputMode(m_window, GLFW_STICKY_KEYS, 0);
@@ -68,6 +71,8 @@ void WindowControl::InitGLFW(int versionMajor, int versionMinor, bool resizableW
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, versionMinor);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_RESIZABLE, resizableWindow);
+	
+
 }
 
 
@@ -100,6 +105,7 @@ void WindowControl::Update()
 {
 	while (gameRunning)
 	{
+		InputManager::Instance().JoyStickUpdate();
 		Time::UpdateTime(glfwGetTime());
 		game->Update();
 
@@ -109,6 +115,7 @@ void WindowControl::Update()
 			Time::m_fixedTime -= Time::fixedDeltaTime;
 		}
 
+		InputManager::Instance().EndFrame();
 	}
 }
 
@@ -120,7 +127,7 @@ void WindowControl::FixedUpdate()
 void WindowControl::Render()
 {
 	// Rendering and etc
-	glClearColor(0.30f, 0.40f, 0.50f, 1.0f);
+	glClearColor(0, 0, 0, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	game->Render();
@@ -180,6 +187,13 @@ void WindowControl::MouseButtonCallback(GLFWwindow* window, int button, int acti
 		InputManager::Instance().MouseClick[button].Press = false;
 		InputManager::Instance().MouseClick[button].Release = true;
 	}
+}
+
+void WindowControl::MaximizeCallBack(GLFWwindow *window, int width, int height)
+{
+	m_screenWidth = width;
+	m_screenHeight = height;
+	glViewport(0, 0, m_screenWidth, m_screenHeight);
 }
 
 void WindowControl::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
