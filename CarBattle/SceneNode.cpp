@@ -1,6 +1,7 @@
 #include "SceneNode.h"
 #include "Game.h"
 #include "Component.h"
+#include "RigidBodyComponent.h"
 
 SceneNode::SceneNode()
 {
@@ -123,6 +124,19 @@ void SceneNode::TraverseGraph(void(SceneNode::*ptr)())
 	}
 }
 
+void SceneNode::AddRigidBody(RigidBodyComponent* rigidBody)
+{
+	m_rigidBody = rigidBody;
+	AddComponent(rigidBody);
+}
+
+void SceneNode::RemoveRigidBody()
+{
+	RemoveComponent(m_rigidBody);
+	delete m_rigidBody;
+	m_rigidBody = NULL;
+}
+
 
 void SceneNode::Init()
 {
@@ -149,6 +163,7 @@ void SceneNode::FixedUpdate()
 	{
 		m_components[i]->FixedUpdate();
 	}
+	UpdateTransform();
 }
 
 void SceneNode::UpdateTransform()
@@ -156,12 +171,13 @@ void SceneNode::UpdateTransform()
 	glm::mat4 identity;
 	glm::mat4 currentTransform;
 
-
 	glm::quat rot;
 
-	rot *= glm::quat(cos(transform.euler.z / 2), 0, 0, sin(transform.euler.z / 2) * 1);
-	rot *= glm::quat(cos(transform.euler.x / 2), sin(transform.euler.x / 2) * 1, 0, 0);
-	rot *= glm::quat(cos(transform.euler.y / 2), 0, sin(transform.euler.y / 2) * 1, 0);
+	float degreeToRadian = 3.14 / 180;
+
+	rot *= glm::quat(cos(transform.euler.z * degreeToRadian / 2), 0, 0, sin(transform.euler.z * degreeToRadian / 2) * 1);
+	rot *= glm::quat(cos(transform.euler.x * degreeToRadian / 2), sin(transform.euler.x * degreeToRadian / 2) * 1, 0, 0);
+	rot *= glm::quat(cos(transform.euler.y * degreeToRadian / 2), 0, sin(transform.euler.y * degreeToRadian / 2) * 1, 0);
 
 	transform.rotation = rot;
 
@@ -178,6 +194,11 @@ void SceneNode::UpdateTransform()
 	}
 
 	transform.model = currentTransform;
+	
+	if (m_rigidBody != NULL)
+	{
+		m_rigidBody->SetTransform(transform.position, transform.rotation);
+	}
 }
 
 

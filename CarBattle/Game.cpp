@@ -10,6 +10,7 @@
 #include "AssimpModel.h"
 #include "ModelRenderer.h"
 #include "ResourceManager.h"
+#include "RigidBodyComponent.h"
 
 AssimpModel model;
 SceneNode* first;
@@ -20,9 +21,6 @@ SceneNode* four;
 DirectionalLight dLight;
 PointLight pLight;
 
-btRigidBody* carBody;
-btTransform carTrans;
-btRigidBody* body;
 Game::Game()
 {
 
@@ -81,11 +79,11 @@ void Game::Init(WindowControl* windowControl)
 	skybox->LoadSkybox("skyboxes/", "jajlands1_ft.jpg", "jajlands1_bk.jpg", "jajlands1_lf.jpg", "jajlands1_rt.jpg", "jajlands1_up.jpg", "jajlands1_dn.jpg");
 
 	camera = new Camera();
-	camera->transform.position.z = -1;
+	camera->transform.position.z = -25;
 	sceneGraph->root->AddChild(camera);
 	
 	cameraTwo = new Camera();
-	cameraTwo->transform.position.z = 5;
+	cameraTwo->transform.position.z = -25;
 	sceneGraph->root->AddChild(cameraTwo);
 
 	model.LoadModelFromFile("models/BMW_M3_GTR/BMW_M3_GTR.obj");
@@ -102,12 +100,18 @@ void Game::Init(WindowControl* windowControl)
 	firstRenderer = new ModelRenderer(&model, programs[1]);
 
 	first->AddComponent(firstRenderer);
+	RigidBodyComponent* rigidBody = new RigidBodyComponent(50, 10000.0f, 0.0f, glm::vec3(0), new btBoxShape(btVector3(10, 2, 5)));
+	first->AddRigidBody(rigidBody);
 
-	//first = new SceneNode();
-	//first->transform.scale = glm::vec3(0.001f);
-	//first->transform.position.z = 0;
-	//sceneGraph->root->AddChild(first);
+	two = new SceneNode();
+	sceneGraph->root->AddChild(two);
+	two->transform.scale = glm::vec3(0.001f);
+	two->transform.position.y = -10;
+	firstRenderer = new ModelRenderer(&model, programs[1]);
+	two->AddComponent(firstRenderer);
 
+	rigidBody = new RigidBodyComponent(0, 10000.0f, 0.0f, glm::vec3(0), new btBoxShape(btVector3(50, 2, 50)));
+	two->AddRigidBody(rigidBody);
 	//pLight.diffuse = glm::vec3(1, 0, 0);
 
 	//first->AddComponent(modelRender);
@@ -124,19 +128,6 @@ void Game::Init(WindowControl* windowControl)
 
 	//first->transform.position.x = -400;
 	
-	btCollisionShape* carBox = new btBoxShape(btVector3(20, 5, 10));
-	carTrans.setIdentity();
-	glm::vec3 pos = first->transform.position;
-	carTrans.setOrigin(btVector3(pos.x, pos.y, pos.z));
-	btScalar mass(50.0f);
-	btVector3 localInertia(1, 1, 1);
-	carBox->calculateLocalInertia(mass, localInertia);
-
-	btDefaultMotionState* myMotionState = new btDefaultMotionState(carTrans);
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, carBox, localInertia);
-	body = new btRigidBody(rbInfo);
-
-	physicsManager->AddCollisionShape(body);
 
 }
 
@@ -148,29 +139,18 @@ void Game::Update()
 	float axis = InputManager::Instance().GetJoyStickAxis(GLFW_JOYSTICK_1, 1);
 	if (press)
 	{
-		camera->transform.position -= camera->transform.forward * Time::deltaTime * 20.0f;
+		first->transform.euler.y += Time::deltaTime * 50;
 	}
 
-	sceneGraph->Update();
+	
 
-	glm::quat rot = first->transform.rotation;
-	carTrans.setRotation(btQuaternion(rot.x, rot.y, rot.z, rot.w));
+	sceneGraph->Update();
 }	
 
 void Game::FixedUpdate()
 {
 	sceneGraph->FixedUpdate();
 	physicsManager->Update();
-
-	btTransform trans;
-	if (body && body->getMotionState())
-	{
-		body->getMotionState()->getWorldTransform(trans);
-	}
-	
-	first->transform.position.x = trans.getOrigin().getX();
-	first->transform.position.y = trans.getOrigin().getY();
-	first->transform.position.z = trans.getOrigin().getZ();
 }
 
 void Game::Render()
@@ -235,6 +215,11 @@ int Game::GetWindowWidth()
 RenderingManager* Game::GetRenderManager()
 {
 	return renderingManager;
+}
+
+PhysicsManager * Game::GetPhysicsManager()
+{
+	return physicsManager;
 }
 
 Game::~Game()

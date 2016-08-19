@@ -40,6 +40,9 @@ public:
 	// Traverse the scene Graph through this function
 	void TraverseGraph(void (SceneNode::*ptr)());
 
+	void AddRigidBody(class RigidBodyComponent* rigidBody);
+	void RemoveRigidBody();
+
 	class Game* GetGame();
 protected:
 	// Updates the current transform of the sceneNode
@@ -49,6 +52,7 @@ protected:
 	std::vector<SceneNode*> m_children;
 	class Game* m_game;
 	std::vector<Component*> m_components;
+	class RigidBodyComponent* m_rigidBody;
 	
 private:
 	//Origin look and upvector of the sceneNode

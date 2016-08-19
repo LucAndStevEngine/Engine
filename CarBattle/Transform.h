@@ -5,6 +5,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtx/quaternion.hpp"
 
+#define PI 3.14
 class Transform
 {
 public:
@@ -19,4 +20,6 @@ public:
 	glm::quat rotation;
 
 	Transform();
+
+	static void QuaternionToEuler(const glm::quat &TQuat, glm::vec3 &TEuler);
 };

@@ -1,4 +1,5 @@
 #include "PhysicsManager.h"
+#include "RigidBodyComponent.h"
 #include "Time.h"
 
 PhysicsManager::PhysicsManager()
@@ -33,6 +34,11 @@ void PhysicsManager::Init()
 void PhysicsManager::Update()
 {
 	m_dynamicWorld->stepSimulation(Time::fixedDeltaTime, m_maxTimeSteps);
+
+	for (int i = 0; i < m_rigidBodies.size(); i++)
+	{
+		m_rigidBodies[i]->UpdateSceneNode();
+	}
 }
 
 void PhysicsManager::Shutdown()
@@ -62,14 +68,22 @@ btVector3 PhysicsManager::GetGravity()
 	return m_gravity;
 }
 
-void PhysicsManager::AddCollisionShape(btRigidBody* shape)
+void PhysicsManager::AddCollisionBody(RigidBodyComponent* body)
 {
-	m_dynamicWorld->addRigidBody(shape);
+	m_dynamicWorld->addRigidBody(body->rigidBody);
+	m_rigidBodies.push_back(body);
 }
 
-bool PhysicsManager::RemoveCollisionShape(btRigidBody* shape)
+bool PhysicsManager::RemoveCollisionBody(RigidBodyComponent* body)
 {
-	m_dynamicWorld->removeRigidBody(shape);
+	m_dynamicWorld->removeRigidBody(body->rigidBody);
+	for (int i = 0; i < m_rigidBodies.size(); i++)
+	{
+		if (m_rigidBodies[i] == body)
+		{
+			m_rigidBodies.erase(m_rigidBodies.begin() + i);
+		}
+	}	
 	return true;
 }
 
