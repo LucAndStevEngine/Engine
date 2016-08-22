@@ -59,10 +59,8 @@ void RigidBodyComponent::UpdateSceneNode()
 
 		Transform::QuaternionToEuler(rot, euler);
 
-		std::cout << "Rigid Body | " << rot.x << " : " << rot.y << " : " << rot.z << " : " << rot.w << std::endl;
-		std::cout << " SceneNode | " << sceneNode->transform.rotation.x << " : " << sceneNode->transform.rotation.y << " : " << sceneNode->transform.rotation.z << " : " << sceneNode->transform.rotation.w << std::endl;
-
 		sceneNode->transform.euler = euler;
+		
 	}
 }
 
@@ -74,8 +72,7 @@ void RigidBodyComponent::SetTransform(glm::vec3 pos, glm::quat rot)
 	trans.setOrigin(btVector3(pos.x + offset.position.x, pos.y + offset.position.y, pos.z + offset.position.z));	
 	btQuaternion rotation = btQuaternion(rot.x, rot.y, rot.z, rot.w);
 	trans.setRotation(rotation);
-	rigidBody->setWorldTransform(trans);
-	
+	rigidBody->setWorldTransform(trans);	
 }
 
 btTransform RigidBodyComponent::GetTransform()

@@ -82,17 +82,6 @@
   <ItemGroup>
     <ResourceCompile Include="CarBattle.rc" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\src\BulletCollision\BulletCollision.vcxproj">
-      <Project>{272e3d1b-bcd4-327e-bf3a-15f2e6770e88}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\src\BulletDynamics\BulletDynamics.vcxproj">
-      <Project>{21aa74a6-6e0a-30bb-a84c-b5a18590845a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\src\LinearMath\LinearMath.vcxproj">
-      <Project>{96db8907-4cc2-3e4f-b409-4bb8c52ff301}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DDAD0022-2E86-4B02-BE0C-41DB4758E0EC}</ProjectGuid>
     <RootNamespace>CarBattle</RootNamespace>
@@ -154,8 +143,8 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../libs;../libs/glfw;../libs/glew;../libs/freeImage;../libs/assimp</AdditionalLibraryDirectories>
-      <AdditionalDependencies>assimpd.lib;FreeImage.lib;opengl32.lib;glfw3.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../libs;../libs/glfw;../libs/glew;../libs/freeImage;../libs/assimp;../lib/Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimpd.lib;FreeImage.lib;opengl32.lib;glfw3.lib;glew32.lib;BulletDynamics_vs2010_debug.lib;BulletCollision_vs2010_debug.lib;LinearMath_vs2010_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
