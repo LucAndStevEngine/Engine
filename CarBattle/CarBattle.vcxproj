@@ -29,6 +29,7 @@
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="ModelRenderer.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
+    <ClCompile Include="RayCast.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="RenderingManager.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="ModelRenderer.h" />
     <ClInclude Include="PhysicsManager.h" />
+    <ClInclude Include="RayCast.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="RenderingManager.h" />
     <ClInclude Include="resource.h" />
