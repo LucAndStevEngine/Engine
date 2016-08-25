@@ -31,3 +31,19 @@ void SceneGraph::ClearGraph()
 	root = new SceneNode();
 	root->m_game = game;
 }
+
+SceneNode* SceneGraph::MousePick(glm::vec3 start, glm::vec3 direct)
+{
+	PickingInfo temp = root->TraverseGraph(&SceneNode::CheckPointCollision, start, direct);
+	if (temp.hit)
+		return temp.hitNode;
+	return NULL;
+}
+
+void SceneGraph::SetRoot(SceneNode * scenenode)
+{
+	Game* temp = root->m_game;
+	delete root;
+	root = scenenode;
+	root->m_game = temp;
+}

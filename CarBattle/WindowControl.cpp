@@ -194,6 +194,7 @@ void WindowControl::MaximizeCallBack(GLFWwindow *window, int width, int height)
 {
 	m_screenWidth = width;
 	m_screenHeight = height;
+
 	glViewport(0, 0, m_screenWidth, m_screenHeight);
 }
 

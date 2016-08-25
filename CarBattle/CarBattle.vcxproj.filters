@@ -136,7 +136,7 @@
       <Filter>Source Files\Component</Filter>
     </ClCompile>
     <ClCompile Include="RayCast.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -219,7 +219,7 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="RayCast.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

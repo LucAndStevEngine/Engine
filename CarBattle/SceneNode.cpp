@@ -2,7 +2,7 @@
 #include "Game.h"
 #include "Component.h"
 #include "RigidBodyComponent.h"
-
+#include "Camera.h"
 SceneNode::SceneNode()
 {
 	m_lookAtOrigin = transform.forward;
@@ -111,6 +111,22 @@ std::vector<Component*> SceneNode::GetComponent()
 	return m_components;
 }
 
+PickingInfo SceneNode::CheckPointCollision(glm::vec3 start, glm::vec3 direct)
+{
+	PickingInfo temp;
+	float distance = glm::distance(transform.position,start);
+	temp.distance = distance;
+	temp.hitNode = this;
+
+	glm::vec3 point = start + direct * distance;
+	//std::cout << point.x << "  " << point.y << "  " << point.z << std::endl;
+	if (glm::distance(this->transform.position, point) < 1)
+		temp.hit = true;
+	else
+		temp.hit = false;
+	return temp;
+}
+
 void SceneNode::TraverseGraph(void(SceneNode::*ptr)())
 {
 	(this->*ptr)();
@@ -122,6 +138,31 @@ void SceneNode::TraverseGraph(void(SceneNode::*ptr)())
 			(m_children[i]->TraverseGraph(ptr));
 		}
 	}
+}
+
+PickingInfo  SceneNode::TraverseGraph(PickingInfo(SceneNode::* ptr)(glm::vec3 s, glm::vec3 d),glm::vec3 start, glm::vec3 direct)
+{
+	PickingInfo temp;
+	if (this->GetParent() != NULL && (dynamic_cast<Camera*>(this)) == NULL)
+	{
+		temp = (this->*ptr)(start, direct);
+	}
+	PickingInfo secondTemp;
+	for (int i = 0; i < m_children.size(); i++)
+	{
+		secondTemp = m_children[i]->TraverseGraph(ptr, start, direct);
+
+		if ( temp.hit && secondTemp.hit)
+		{
+			if (temp.distance > secondTemp.distance)
+				temp = secondTemp;
+		}
+		else if (secondTemp.hit)
+		{
+			temp = secondTemp;
+		}
+	}
+	return temp;
 }
 
 void SceneNode::AddRigidBody(RigidBodyComponent* rigidBody)
@@ -207,7 +248,5 @@ Game* SceneNode::GetGame()
 	return m_game;
 }
 
-/// TODO
-/// MAKE GETTERS AND SETTERS FOR POSITON AND ROTATION
-/// USED FOR RIGIDBODIES AND COLLISION SHTUFF
+
 /// Luc Vo - "Better than Firas!" - 4:00P.M August, Tuesday 16, 2016

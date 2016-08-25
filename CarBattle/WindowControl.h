@@ -27,8 +27,8 @@ public:
 	~WindowControl();
 
 	GLFWwindow* GetWindow();
-	int GetWidth();
-	int GetHeight();
+	 int GetWidth();
+	 int GetHeight();
 
 private:
 	void InitGLFW(int versionMajor, int versionMinor, bool resizableWindow);

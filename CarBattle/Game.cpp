@@ -4,7 +4,7 @@
 #include "Time.h"
 
 #include "Skybox.h"
-
+#include "RayCast.h"
 #include "Light.h"
 #include "Camera.h"
 #include "AssimpModel.h"
@@ -75,7 +75,7 @@ void Game::Init(WindowControl* windowControl)
 	sceneGraph = new SceneGraph(this);
 
 	skybox = new Skybox();
-	sceneGraph->root->AddChild(skybox);
+	sceneGraph->SetRoot(skybox);
 	skybox->LoadSkybox("skyboxes/", "jajlands1_ft.jpg", "jajlands1_bk.jpg", "jajlands1_lf.jpg", "jajlands1_rt.jpg", "jajlands1_up.jpg", "jajlands1_dn.jpg");
 
 	camera = new Camera();
@@ -127,19 +127,24 @@ void Game::Init(WindowControl* windowControl)
 	//first->AddComponent(modelRender);
 
 	//first->transform.position.x = -400;
-	
-
+	//
+	//glm::mat4 proj = glm::perspective(45.0f, (float)GetWindowWidth() / (float)GetWindowHeight(), 0.01f, 1000.0f);
+	//camera->SetProjection(proj);
+	//cameraTwo->SetProjection(proj);
 }
 
 void Game::Update()
 {
 
-	bool press = InputManager::Instance().GetJoyStickButtonDown(GLFW_JOYSTICK_1, 0);
+	bool press = InputManager::Instance().MousePress(GLFW_MOUSE_BUTTON_1);
 
-	float axis = InputManager::Instance().GetJoyStickAxis(GLFW_JOYSTICK_1, 1);
+	//float axis = InputManager::Instance().GetJoyStickAxis(GLFW_JOYSTICK_1, 1);
 	if (press)
 	{
-		first->transform.euler.y += Time::deltaTime * 50;
+		glm::vec3 rayDirect = RayCast::GetRayCastDirection(camera, InputManager::Instance().MouseX, InputManager::Instance().MouseY, GetWindowWidth(), GetWindowHeight());
+		SceneNode* temp =  sceneGraph->MousePick(camera->transform.position, rayDirect);
+		if(temp != NULL && temp != camera)
+		temp->transform.euler.y += 90;
 	}
 
 	
@@ -155,11 +160,14 @@ void Game::FixedUpdate()
 
 void Game::Render()
 {
-	glViewport(0, 0, windowControl->GetWidth()/2 - 5, windowControl->GetHeight());
+	glm::mat4 proj = glm::perspective(45.0f, (float)GetWindowWidth() / (float)GetWindowHeight(), 0.01f, 1000.0f);
+	camera->SetProjection(proj);
+	cameraTwo->SetProjection(proj);
+	glViewport(0, 0, windowControl->GetWidth(), windowControl->GetHeight());
 	ShaderProgram* program = ResourceManager::GetShader("Skybox");
 	program->UseProgram();
-	glm::mat4 proj = glm::perspective(45.0f, (((float)GetWindowWidth()/2)-5) / (float)GetWindowHeight(), 0.01f, 1000.0f);
-	program->SetUniform("projection", proj);
+	//glm::mat4 proj = glm::perspective(45.0f, (((float)GetWindowWidth()/2)-5) / (float)GetWindowHeight(), 0.01f, 1000.0f);
+	program->SetUniform("projection", camera->GetProjection());
 	program->SetUniform("view", glm::translate(camera->LookAt(), camera->transform.position));
 	program->SetUniform("model", glm::mat4());
 	program->SetUniform("color", glm::vec4(1, 1, 1, 1));
@@ -170,7 +178,7 @@ void Game::Render()
 	program->UseProgram();
 	program->SetUniform("diffuse", 0);
 	program->SetUniform("specular", 2);
-	program->SetUniform("projection", proj);
+	program->SetUniform("projection", camera->GetProjection());
 	program->SetUniform("view", camera->LookAt());
 	program->SetUniform("viewPos", camera->transform.position);
 	program->SetUniform("fog.enabled", false);
@@ -182,17 +190,17 @@ void Game::Render()
 	renderingManager->RenderScene();
 
 
-	glViewport(windowControl->GetWidth() / 2 + 5, 0, windowControl->GetWidth() / 2 - 5, windowControl->GetHeight());
-	program = ResourceManager::GetShader("Skybox");
-	program->UseProgram();
-	program->SetUniform("view", glm::translate(cameraTwo->LookAt(), cameraTwo->transform.position));
+	//glViewport(windowControl->GetWidth() / 2 + 5, 0, windowControl->GetWidth() / 2 - 5, windowControl->GetHeight());
+	//program = ResourceManager::GetShader("Skybox");
+	//program->UseProgram();
+	//program->SetUniform("view", glm::translate(cameraTwo->LookAt(), cameraTwo->transform.position));
 
-	program = ResourceManager::GetShader("Default");
-	program->UseProgram();
-	program->SetUniform("view", cameraTwo->LookAt());
-	program->SetUniform("viewPos", cameraTwo->transform.position);
-	renderingManager->frustum.CreateFrustum(cameraTwo->transform, 0.01f, 1000.0f, (((float)GetWindowWidth() / 2) - 5) / (float)GetWindowHeight(), 45.0f);
-	renderingManager->RenderScene();
+	//program = ResourceManager::GetShader("Default");
+	//program->UseProgram();
+	//program->SetUniform("view", cameraTwo->LookAt());
+	//program->SetUniform("viewPos", cameraTwo->transform.position);
+	//renderingManager->frustum.CreateFrustum(cameraTwo->transform, 0.01f, 1000.0f, (((float)GetWindowWidth() / 2) - 5) / (float)GetWindowHeight(), 45.0f);
+	//renderingManager->RenderScene();
 }
 
 void Game::Shutdown()

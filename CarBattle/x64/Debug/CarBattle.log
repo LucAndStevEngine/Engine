@@ -1,0 +1,62 @@
+﻿Build started 8/22/2016 4:56:15 PM.
+     1>Project "C:\Users\luctv\Documents\Engine\CarBattle\CarBattle.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt AssimpModel.cpp Camera.cpp Component.cpp FrameBuffer.cpp FrustumCulling.cpp Game.cpp InputManager.cpp Light.cpp ModelRenderer.cpp PhysicsManager.cpp RayCast.cpp RenderComponent.cpp RenderingManager.cpp ResourceManager.cpp RigidBodyComponent.cpp SceneGraph.cpp SceneNode.cpp Shader.cpp Skybox.cpp SkyboxRenderer.cpp Source.cpp Texture.cpp Time.cpp Transform.cpp VertexBufferObject.cpp WindowControl.cpp
+         WindowControl.cpp
+     1>c:\users\luctv\documents\engine\carbattle\windowcontrol.h(4): fatal error C1083: Cannot open include file: 'GL\glew.h': No such file or directory
+         VertexBufferObject.cpp
+     1>c:\users\luctv\documents\engine\carbattle\vertexbufferobject.h(3): fatal error C1083: Cannot open include file: 'GL/glew.h': No such file or directory
+         Transform.cpp
+     1>c:\users\luctv\documents\engine\carbattle\transform.h(3): fatal error C1083: Cannot open include file: 'glm/gtc/type_ptr.hpp': No such file or directory
+         Time.cpp
+     1>c:\users\luctv\documents\engine\carbattle\time.h(16): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+         Texture.cpp
+     1>c:\users\luctv\documents\engine\carbattle\texture.h(3): fatal error C1083: Cannot open include file: 'GL\glew.h': No such file or directory
+         Source.cpp
+     1>c:\users\luctv\documents\engine\carbattle\windowcontrol.h(4): fatal error C1083: Cannot open include file: 'GL\glew.h': No such file or directory
+         SkyboxRenderer.cpp
+     1>c:\users\luctv\documents\engine\carbattle\shader.h(3): fatal error C1083: Cannot open include file: 'glm\glm.hpp': No such file or directory
+         Skybox.cpp
+     1>c:\users\luctv\documents\engine\carbattle\transform.h(3): fatal error C1083: Cannot open include file: 'glm/gtc/type_ptr.hpp': No such file or directory
+         Shader.cpp
+     1>c:\users\luctv\documents\engine\carbattle\shader.h(3): fatal error C1083: Cannot open include file: 'glm\glm.hpp': No such file or directory
+         SceneNode.cpp
+     1>c:\users\luctv\documents\engine\carbattle\transform.h(3): fatal error C1083: Cannot open include file: 'glm/gtc/type_ptr.hpp': No such file or directory
+         SceneGraph.cpp
+     1>c:\users\luctv\documents\engine\carbattle\transform.h(3): fatal error C1083: Cannot open include file: 'glm/gtc/type_ptr.hpp': No such file or directory
+         RigidBodyComponent.cpp
+     1>c:\users\luctv\documents\engine\carbattle\physicsmanager.h(2): fatal error C1083: Cannot open include file: 'btBulletDynamicsCommon.h': No such file or directory
+         ResourceManager.cpp
+     1>c:\users\luctv\documents\engine\carbattle\resourcemanager.h(7): fatal error C1083: Cannot open include file: 'GL/glew.h': No such file or directory
+         RenderingManager.cpp
+     1>c:\users\luctv\documents\engine\carbattle\shader.h(3): fatal error C1083: Cannot open include file: 'glm\glm.hpp': No such file or directory
+         RenderComponent.cpp
+     1>c:\users\luctv\documents\engine\carbattle\shader.h(3): fatal error C1083: Cannot open include file: 'glm\glm.hpp': No such file or directory
+         RayCast.cpp
+         PhysicsManager.cpp
+     1>c:\users\luctv\documents\engine\carbattle\physicsmanager.h(2): fatal error C1083: Cannot open include file: 'btBulletDynamicsCommon.h': No such file or directory
+         ModelRenderer.cpp
+     1>c:\users\luctv\documents\engine\carbattle\shader.h(3): fatal error C1083: Cannot open include file: 'glm\glm.hpp': No such file or directory
+         Light.cpp
+     1>c:\users\luctv\documents\engine\carbattle\shader.h(3): fatal error C1083: Cannot open include file: 'glm\glm.hpp': No such file or directory
+         InputManager.cpp
+     1>c:\users\luctv\documents\engine\carbattle\inputmanager.cpp(2): fatal error C1083: Cannot open include file: 'GLFW\glfw3.h': No such file or directory
+         Generating Code...
+         Compiling...
+         Game.cpp
+     1>c:\users\luctv\documents\engine\carbattle\game.h(4): fatal error C1083: Cannot open include file: 'GL\glew.h': No such file or directory
+         FrustumCulling.cpp
+     1>c:\users\luctv\documents\engine\carbattle\frustumculling.h(4): fatal error C1083: Cannot open include file: 'glm/gtc/type_ptr.hpp': No such file or directory
+         FrameBuffer.cpp
+     1>c:\users\luctv\documents\engine\carbattle\framebuffer.h(3): fatal error C1083: Cannot open include file: 'glm/gtc/type_ptr.hpp': No such file or directory
+         Component.cpp
+         Camera.cpp
+     1>c:\users\luctv\documents\engine\carbattle\transform.h(3): fatal error C1083: Cannot open include file: 'glm/gtc/type_ptr.hpp': No such file or directory
+         AssimpModel.cpp
+     1>c:\users\luctv\documents\engine\carbattle\vertexbufferobject.h(3): fatal error C1083: Cannot open include file: 'GL/glew.h': No such file or directory
+         Generating Code...
+     1>Done Building Project "C:\Users\luctv\Documents\Engine\CarBattle\CarBattle.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:05.37

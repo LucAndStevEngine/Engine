@@ -3,12 +3,20 @@
 #include <vector>
 #include "AssimpModel.h"
 
+struct PickingInfo
+{
+	class SceneNode* hitNode;
+	float distance;
+	bool hit;
+};
+
 class Component;
 
 class SceneNode
 {
 	friend class SceneGraph;
 public:
+
 	// the current transform of the object
 	Transform transform;
 
@@ -36,9 +44,12 @@ public:
 	void AddComponent(Component* node);
 	void RemoveComponent(Component* node);
 	std::vector<Component*> GetComponent();
-
+	
+	PickingInfo CheckPointCollision(glm::vec3 start, glm::vec3 direct);
 	// Traverse the scene Graph through this function
 	void TraverseGraph(void (SceneNode::*ptr)());
+	PickingInfo TraverseGraph(PickingInfo(SceneNode::* ptr)(glm::vec3 s, glm::vec3 d), glm::vec3 start, glm::vec3 direct);
+	SceneNode TraverseGraph(void (SceneGraph::*ptr)());
 
 	void AddRigidBody(class RigidBodyComponent* rigidBody);
 	void RemoveRigidBody();
@@ -59,4 +70,7 @@ private:
 	glm::vec3 m_lookAtOrigin;
 	glm::vec3 m_upVectorOrigin;
 };
+
+
+
 

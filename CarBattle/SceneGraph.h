@@ -13,7 +13,8 @@ public:
 	void Update();
 	void FixedUpdate();
 	void ClearGraph();
-	
+	SceneNode* MousePick(glm::vec3 start, glm::vec3 direct);
+	void SetRoot(SceneNode* scenenode);
 };
 
 
