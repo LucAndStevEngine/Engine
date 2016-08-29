@@ -5,6 +5,10 @@
 
 struct PickingInfo
 {
+	PickingInfo() : hitNode(NULL), distance(0), hit(false)
+	{
+	
+	}
 	class SceneNode* hitNode;
 	float distance;
 	bool hit;

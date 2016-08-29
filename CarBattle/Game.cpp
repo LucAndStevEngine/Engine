@@ -12,6 +12,9 @@
 #include "ResourceManager.h"
 #include "RigidBodyComponent.h"
 
+#include "fmod\fmod.hpp"
+#include "fmod\fmod_errors.h"
+
 AssimpModel model;
 SceneNode* first;
 SceneNode* two;
@@ -21,6 +24,8 @@ SceneNode* four;
 DirectionalLight dLight;
 PointLight pLight;
 
+FMOD::System *soundSystem;
+FMOD::Sound* sound;
 Game::Game()
 {
 
@@ -29,7 +34,7 @@ Game::Game()
 void Game::Init(WindowControl* windowControl)
 {
 	this->windowControl = windowControl;
-
+	
 	renderingManager = new RenderingManager();
 
 	physicsManager = new PhysicsManager();
@@ -100,13 +105,13 @@ void Game::Init(WindowControl* windowControl)
 	firstRenderer = new ModelRenderer(&model, programs[1]);
 
 	first->AddComponent(firstRenderer);
-	RigidBodyComponent* rigidBody = new RigidBodyComponent(50, 10000.0f, 0.0f, glm::vec3(0), new btBoxShape(btVector3(10, 2, 5)));
+	RigidBodyComponent* rigidBody = new RigidBodyComponent(0, 10000.0f, 0.0f, glm::vec3(0), new btBoxShape(btVector3(10, 2, 5)));
 	first->AddRigidBody(rigidBody);
 
 	two = new SceneNode();
 	sceneGraph->root->AddChild(two);
 	two->transform.scale = glm::vec3(0.001f);
-	two->transform.position.y = -10;
+	two->transform.position.z = -10;
 	firstRenderer = new ModelRenderer(&model, programs[1]);
 	two->AddComponent(firstRenderer);
 
@@ -131,6 +136,10 @@ void Game::Init(WindowControl* windowControl)
 	//glm::mat4 proj = glm::perspective(45.0f, (float)GetWindowWidth() / (float)GetWindowHeight(), 0.01f, 1000.0f);
 	//camera->SetProjection(proj);
 	//cameraTwo->SetProjection(proj);
+
+	FMOD::System_Create(&soundSystem);
+	soundSystem->init(36, FMOD_INIT_NORMAL, NULL);
+	soundSystem->createSound("Sounds/grenade.wav", FMOD_LOOP_OFF, 0, &sound);
 }
 
 void Game::Update()
@@ -145,6 +154,8 @@ void Game::Update()
 		SceneNode* temp =  sceneGraph->MousePick(camera->transform.position, rayDirect);
 		if(temp != NULL && temp != camera)
 		temp->transform.euler.y += 90;
+
+		soundSystem->playSound(sound, NULL, false, NULL);
 	}
 
 	

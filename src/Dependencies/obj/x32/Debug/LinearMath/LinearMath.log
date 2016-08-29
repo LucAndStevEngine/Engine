@@ -1,9 +1,27 @@
-﻿Build started 8/22/2016 6:05:15 PM.
-     1>Project "C:\Users\luctv\Documents\Engine\src\Dependencies\LinearMath.vcxproj" on node 4 (Build target(s)).
-     1>Lib:
-         LinearMath.vcxproj -> C:\Users\luctv\Documents\Engine\src\Dependencies\..\..\lib\Debug\LinearMath_vs2010_debug.lib
-     1>Done Building Project "C:\Users\luctv\Documents\Engine\src\Dependencies\LinearMath.vcxproj" (Build target(s)).
+﻿Build started 2016-08-29 2:49:54 PM.
+     1>Project "C:\Users\Steve\Documents\Engine\src\Dependencies\LinearMath.vcxproj" on node 4 (Rebuild target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I..\..\src /Zi /nologo /W3 /WX- /Od /Oy- /D _DEBUG=1 /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /Gy /fp:fast /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"obj\x32\Debug\LinearMath\\" /Fd"..\..\lib\Debug\LinearMath_vs2010_debug.pdb" /Gd /TP /analyze- /errorReport:prompt /MP ..\..\src\LinearMath\btAlignedAllocator.cpp ..\..\src\LinearMath\btConvexHull.cpp ..\..\src\LinearMath\btConvexHullComputer.cpp ..\..\src\LinearMath\btGeometryUtil.cpp ..\..\src\LinearMath\btPolarDecomposition.cpp ..\..\src\LinearMath\btQuickprof.cpp ..\..\src\LinearMath\btSerializer.cpp ..\..\src\LinearMath\btVector3.cpp
+         btAlignedAllocator.cpp
+         btConvexHull.cpp
+         btConvexHullComputer.cpp
+         btGeometryUtil.cpp
+         btPolarDecomposition.cpp
+         btQuickprof.cpp
+         btSerializer.cpp
+         btVector3.cpp
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\Lib.exe /OUT:"..\..\lib\Debug\LinearMath_vs2010_debug.lib" /NOLOGO /MACHINE:X86 obj\x32\Debug\LinearMath\btAlignedAllocator.obj
+         obj\x32\Debug\LinearMath\btConvexHull.obj
+         obj\x32\Debug\LinearMath\btConvexHullComputer.obj
+         obj\x32\Debug\LinearMath\btGeometryUtil.obj
+         obj\x32\Debug\LinearMath\btPolarDecomposition.obj
+         obj\x32\Debug\LinearMath\btQuickprof.obj
+         obj\x32\Debug\LinearMath\btSerializer.obj
+         obj\x32\Debug\LinearMath\btVector3.obj
+         LinearMath.vcxproj -> C:\Users\Steve\Documents\Engine\src\Dependencies\..\..\lib\Debug\LinearMath_vs2010_debug.lib
+     1>Done Building Project "C:\Users\Steve\Documents\Engine\src\Dependencies\LinearMath.vcxproj" (Rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.06
+Time Elapsed 00:00:03.55

@@ -145,8 +145,8 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../libs;../libs/glfw;../libs/glew;../libs/freeImage;../libs/assimp;../lib/Debug</AdditionalLibraryDirectories>
-      <AdditionalDependencies>assimpd.lib;FreeImage.lib;opengl32.lib;glfw3.lib;glew32.lib;BulletDynamics_vs2010_debug.lib;BulletCollision_vs2010_debug.lib;LinearMath_vs2010_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../libs;../libs/glfw;../libs/glew;../libs/freeImage;../libs/assimp;../lib/Debug;../libs/fmod</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimpd.lib;FreeImage.lib;opengl32.lib;glfw3.lib;glew32.lib;BulletDynamics_vs2010_debug.lib;BulletCollision_vs2010_debug.lib;LinearMath_vs2010_debug.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

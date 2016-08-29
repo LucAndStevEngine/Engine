@@ -140,7 +140,7 @@ void SceneNode::TraverseGraph(void(SceneNode::*ptr)())
 	}
 }
 
-PickingInfo  SceneNode::TraverseGraph(PickingInfo(SceneNode::* ptr)(glm::vec3 s, glm::vec3 d),glm::vec3 start, glm::vec3 direct)
+PickingInfo SceneNode::TraverseGraph(PickingInfo(SceneNode::* ptr)(glm::vec3 s, glm::vec3 d),glm::vec3 start, glm::vec3 direct)
 {
 	PickingInfo temp;
 	if (this->GetParent() != NULL && (dynamic_cast<Camera*>(this)) == NULL)
@@ -152,7 +152,7 @@ PickingInfo  SceneNode::TraverseGraph(PickingInfo(SceneNode::* ptr)(glm::vec3 s,
 	{
 		secondTemp = m_children[i]->TraverseGraph(ptr, start, direct);
 
-		if ( temp.hit && secondTemp.hit)
+		if (temp.hit && secondTemp.hit)
 		{
 			if (temp.distance > secondTemp.distance)
 				temp = secondTemp;
