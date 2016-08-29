@@ -7,6 +7,7 @@
 #include "SceneGraph.h"
 #include "RenderingManager.h"
 #include "PhysicsManager.h"
+#include "SoundManager.h"
 
 class Game
 {
@@ -27,6 +28,8 @@ public:
 
 	RenderingManager* GetRenderManager();
 	PhysicsManager* GetPhysicsManager();
+	SoundManager* GetSoundManager();
+
 protected:
 	std::vector<ShaderProgram*> programs;
 	std::vector<Shader*> shaders;
@@ -36,6 +39,7 @@ protected:
 	virtual ~Game();
 	RenderingManager *renderingManager;
 	PhysicsManager *physicsManager;
+	SoundManager *soundManager;
 	
 private:
 	class Skybox* skybox;

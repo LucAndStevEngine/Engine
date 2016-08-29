@@ -18,7 +18,7 @@ glm::vec3 RayCast::GetRayCastDirection(Camera * camera, int posX, int posY, int 
 	glm::vec3 ray_wor = glm::vec3(temp.x, temp.y, temp.z);
 	ray_wor = glm::normalize(ray_wor);
 	//ray_wor.x *= -1;
-	std::cout << ray_wor.x << "   " << ray_wor.y << "  " << ray_wor.z << std::endl;
+	//std::cout << ray_wor.x << "   " << ray_wor.y << "  " << ray_wor.z << std::endl;
 	return ray_wor;
 }
 

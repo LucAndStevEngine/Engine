@@ -12,9 +12,6 @@
 #include "ResourceManager.h"
 #include "RigidBodyComponent.h"
 
-#include "fmod\fmod.hpp"
-#include "fmod\fmod_errors.h"
-
 AssimpModel model;
 SceneNode* first;
 SceneNode* two;
@@ -24,8 +21,8 @@ SceneNode* four;
 DirectionalLight dLight;
 PointLight pLight;
 
-FMOD::System *soundSystem;
-FMOD::Sound* sound;
+//FMOD::System *soundSystem;
+//FMOD::Sound* sound;
 Game::Game()
 {
 
@@ -40,6 +37,9 @@ void Game::Init(WindowControl* windowControl)
 	physicsManager = new PhysicsManager();
 	physicsManager->SetGravity(&btVector3(0, -20, 0));
 	physicsManager->Init();
+
+	soundManager = new SoundManager();
+	soundManager->Init();
 
 	glEnable(GL_DEPTH_TEST);
 	glClearDepth(1.0);
@@ -137,9 +137,9 @@ void Game::Init(WindowControl* windowControl)
 	//camera->SetProjection(proj);
 	//cameraTwo->SetProjection(proj);
 
-	FMOD::System_Create(&soundSystem);
-	soundSystem->init(36, FMOD_INIT_NORMAL, NULL);
-	soundSystem->createSound("Sounds/grenade.wav", FMOD_LOOP_OFF, 0, &sound);
+	//FMOD::System_Create(&soundSystem);
+	//soundSystem->init(36, FMOD_INIT_NORMAL, NULL);
+	//soundSystem->createSound("Sounds/grenade.wav", FMOD_LOOP_OFF, 0, &sound);
 }
 
 void Game::Update()
@@ -155,7 +155,8 @@ void Game::Update()
 		if(temp != NULL && temp != camera)
 		temp->transform.euler.y += 90;
 
-		soundSystem->playSound(sound, NULL, false, NULL);
+		soundManager->PlaySound("Sounds/grenade.wav");
+		//soundSystem->playSound(sound, NULL, false, NULL);
 	}
 
 	
@@ -216,8 +217,6 @@ void Game::Render()
 
 void Game::Shutdown()
 {
-
-	delete skybox;
 	delete sceneGraph;
 }
 

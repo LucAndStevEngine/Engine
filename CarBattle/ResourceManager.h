@@ -7,21 +7,28 @@
 #include "GL/glew.h"
 
 #include "Shader.h"
+#include "fmod\fmod.hpp"
 
 class ResourceManager
 {
 public:
 	// Resource storage
 	static std::map<std::string, ShaderProgram*> Shaders;
+	static std::map<std::string, FMOD::Sound*> Sounds;
 
 	// Saves the shader in a map
 	static ShaderProgram* SaveShader(ShaderProgram*, std::string name);
 	// Retrieves a stored sader
 	static ShaderProgram* GetShader(std::string name);
-	// Properly de-allocates all loaded resources
-	static void Clear();
 	// Removes a shader from the map with the specified name
 	static void RemoveShader(std::string name);
+
+	static FMOD::Sound* SaveSound(FMOD::Sound* sound, std::string path);
+	static FMOD::Sound* GetSound(std::string path);
+	static void RemoveSound(std::string path);
+
+	// Properly de-allocates all loaded resources
+	static void Clear();
 
 private:
 	ResourceManager();
