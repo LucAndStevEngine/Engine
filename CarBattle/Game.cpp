@@ -84,7 +84,7 @@ void Game::Init(WindowControl* windowControl)
 	skybox->LoadSkybox("skyboxes/", "jajlands1_ft.jpg", "jajlands1_bk.jpg", "jajlands1_lf.jpg", "jajlands1_rt.jpg", "jajlands1_up.jpg", "jajlands1_dn.jpg");
 
 	camera = new Camera();
-	camera->transform.position.z = -25;
+	camera->transform.position.z = 0;
 	sceneGraph->root->AddChild(camera);
 	
 	cameraTwo = new Camera();
@@ -117,6 +117,7 @@ void Game::Init(WindowControl* windowControl)
 
 	rigidBody = new RigidBodyComponent(0, 10000.0f, 0.0f, glm::vec3(0), new btBoxShape(btVector3(50, 2, 50)));
 	two->AddRigidBody(rigidBody);
+	soundManager->LoadSound("Sounds/grenade.wav");
 	//pLight.diffuse = glm::vec3(1, 0, 0);
 
 	//first->AddComponent(modelRender);
@@ -148,6 +149,14 @@ void Game::Update()
 	bool press = InputManager::Instance().MousePress(GLFW_MOUSE_BUTTON_1);
 
 	//float axis = InputManager::Instance().GetJoyStickAxis(GLFW_JOYSTICK_1, 1);
+	if (InputManager::Instance().KeyPress(GLFW_KEY_D))
+	{
+		first->transform.position.x += 10;
+	}
+	if (InputManager::Instance().KeyPress(GLFW_KEY_A))
+	{
+		first->transform.position.x -= 10;
+	}
 	if (press)
 	{
 		glm::vec3 rayDirect = RayCast::GetRayCastDirection(camera, InputManager::Instance().MouseX, InputManager::Instance().MouseY, GetWindowWidth(), GetWindowHeight());
@@ -155,7 +164,8 @@ void Game::Update()
 		if(temp != NULL && temp != camera)
 		temp->transform.euler.y += 90;
 
-		soundManager->PlaySound("Sounds/grenade.wav");
+		//soundManager->PlaySound("Sounds/grenade.wav");
+		soundManager->Play3DSound(ResourceManager::GetSound("Sounds/grenade.wav"), first, camera);
 		//soundSystem->playSound(sound, NULL, false, NULL);
 	}
 
