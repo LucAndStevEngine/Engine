@@ -4,6 +4,7 @@
 
 Component::Component()
 {
+	isEnable = true;
 }
 
 void Component::Init()

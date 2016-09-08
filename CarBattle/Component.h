@@ -5,7 +5,7 @@ public:
 	Component();
 
 	class SceneNode* sceneNode;
-
+	bool isEnable;
 	virtual void Init();
 	virtual void Update();
 	virtual void FixedUpdate();

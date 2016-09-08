@@ -11,15 +11,16 @@
 #include "ModelRenderer.h"
 #include "ResourceManager.h"
 #include "RigidBodyComponent.h"
+#include "ListenerComponent.h"
 
 AssimpModel model;
 SceneNode* first;
 SceneNode* two;
 SceneNode* three;
 SceneNode* four;
-
-DirectionalLight dLight;
+SceneNode* steve;
 PointLight pLight;
+DirectionalLight dLight;
 
 //FMOD::System *soundSystem;
 //FMOD::Sound* sound;
@@ -101,6 +102,7 @@ void Game::Init(WindowControl* windowControl)
 	
 	pLight.diffuse = glm::vec3(1, 0, 0);
 
+
 	ModelRenderer* firstRenderer;
 	firstRenderer = new ModelRenderer(&model, programs[1]);
 
@@ -118,6 +120,7 @@ void Game::Init(WindowControl* windowControl)
 	rigidBody = new RigidBodyComponent(0, 10000.0f, 0.0f, glm::vec3(0), new btBoxShape(btVector3(50, 2, 50)));
 	two->AddRigidBody(rigidBody);
 	soundManager->LoadSound("Sounds/grenade.wav");
+	camera->AddComponent(new ListenerComponent());
 	//pLight.diffuse = glm::vec3(1, 0, 0);
 
 	//first->AddComponent(modelRender);
@@ -141,6 +144,11 @@ void Game::Init(WindowControl* windowControl)
 	//FMOD::System_Create(&soundSystem);
 	//soundSystem->init(36, FMOD_INIT_NORMAL, NULL);
 	//soundSystem->createSound("Sounds/grenade.wav", FMOD_LOOP_OFF, 0, &sound);
+	steve = new SceneNode();
+	sceneGraph->root->AddChild(steve);
+	steve->AddComponent(new ListenerComponent);
+	steve->transform.position.z = 200;
+	
 }
 
 void Game::Update()
@@ -151,11 +159,15 @@ void Game::Update()
 	//float axis = InputManager::Instance().GetJoyStickAxis(GLFW_JOYSTICK_1, 1);
 	if (InputManager::Instance().KeyPress(GLFW_KEY_D))
 	{
-		first->transform.position.x += 10;
+		first->transform.position.z += 10;
+		std::cout << first->transform.position.z << std::endl;
 	}
 	if (InputManager::Instance().KeyPress(GLFW_KEY_A))
 	{
-		first->transform.position.x -= 10;
+		if(camera->GetComponent<ListenerComponent>()->isEnable == false)
+			camera->GetComponent<ListenerComponent>()->isEnable = true;
+		else 
+			camera->GetComponent<ListenerComponent>()->isEnable = false;
 	}
 	if (press)
 	{
@@ -165,13 +177,14 @@ void Game::Update()
 		temp->transform.euler.y += 90;
 
 		//soundManager->PlaySound("Sounds/grenade.wav");
-		soundManager->Play3DSound(ResourceManager::GetSound("Sounds/grenade.wav"), first, camera);
+		soundManager->PlaySound(ResourceManager::GetSound("Sounds/grenade.wav"), first);
 		//soundSystem->playSound(sound, NULL, false, NULL);
 	}
 
 	
 
 	sceneGraph->Update();
+	soundManager->Update();
 }	
 
 void Game::FixedUpdate()
@@ -248,6 +261,11 @@ RenderingManager* Game::GetRenderManager()
 PhysicsManager * Game::GetPhysicsManager()
 {
 	return physicsManager;
+}
+
+SoundManager * Game::GetSoundManager()
+{
+	return soundManager;
 }
 
 Game::~Game()

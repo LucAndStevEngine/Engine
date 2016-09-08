@@ -47,8 +47,9 @@ public:
 	// Component Management
 	void AddComponent(Component* node);
 	void RemoveComponent(Component* node);
-	std::vector<Component*> GetComponent();
-	
+	std::vector<Component*> GetComponents();
+	template<class T>
+	T* GetComponent();
 	PickingInfo CheckPointCollision(glm::vec3 start, glm::vec3 direct);
 	// Traverse the scene Graph through this function
 	void TraverseGraph(void (SceneNode::*ptr)());
@@ -76,5 +77,14 @@ private:
 };
 
 
-
-
+template<class T>
+inline T * SceneNode::GetComponent()
+{
+	for (int i = 0; i < m_components.size(); i++)
+	{
+		T* t = dynamic_cast<T*>(m_components[i]);
+			if (t != NULL)
+				return t;
+	}
+	return NULL;
+}

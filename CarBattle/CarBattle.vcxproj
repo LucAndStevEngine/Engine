@@ -27,6 +27,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="ListenerComponent.cpp" />
     <ClCompile Include="ModelRenderer.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="RayCast.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="ListenerComponent.h" />
     <ClInclude Include="ModelRenderer.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="RayCast.h" />

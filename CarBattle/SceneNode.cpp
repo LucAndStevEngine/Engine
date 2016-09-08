@@ -106,7 +106,7 @@ void SceneNode::RemoveComponent(Component *comp)
 	}
 }
 
-std::vector<Component*> SceneNode::GetComponent()
+std::vector<Component*> SceneNode::GetComponents()
 {
 	return m_components;
 }
