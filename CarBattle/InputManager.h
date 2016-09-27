@@ -11,6 +11,9 @@
 
 struct ButtonState
 {
+	bool pressed = false;
+	bool released = false;
+
 	bool Press;
 	bool Down;
 	bool Release;
@@ -61,6 +64,7 @@ public:
 	~InputManager();
 
 private:
+	void UpdateInformation(ButtonState &state);
 	InputManager();
 };
 

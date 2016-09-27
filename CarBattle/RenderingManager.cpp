@@ -1,9 +1,12 @@
 #include "RenderingManager.h"
 #include "GL\glew.h"
 #include "SceneNode.h"
+#include "Camera.h"
+#include "GLMath.h"
 
 unsigned int RenderingManager::m_currentVAO = -1;
 ShaderProgram* RenderingManager::m_currentShader = NULL;
+Camera* RenderingManager::m_currentCamera = NULL;
 
 RenderingManager::RenderingManager()
 {
@@ -30,8 +33,10 @@ void RenderingManager::RemoveRenderComp(RenderComponent* renderer)
 	}
 }
 
-void RenderingManager::RenderScene()
+void RenderingManager::RenderScene(Camera* cam)
 { 
+	m_currentCamera = cam;
+
 	for (std::list<RenderComponent*>::iterator it = renderers.begin(); it != renderers.end(); it++)
 	{
 		RenderComponent* renderer = (RenderComponent*)*it;
@@ -59,6 +64,8 @@ void RenderingManager::RenderScene()
 		{
 			m_currentShader = renderer->GetShader();
 			m_currentShader->UseProgram();
+			m_currentShader->SetUniform("projection", m_currentCamera->GetProjection());
+			m_currentShader->SetUniform("view", m_currentCamera->LookAt());
 		}
 		if (renderer->GetVAO() != m_currentVAO)
 		{
@@ -71,4 +78,19 @@ void RenderingManager::RenderScene()
 	}
 	m_currentShader = NULL;
 	m_currentVAO = -1;
+}
+
+ShaderProgram * RenderingManager::GetCurrentShader()
+{
+	return m_currentShader;
+}
+
+unsigned int RenderingManager::GetCurrentVAO()
+{
+	return m_currentVAO;
+}
+
+Camera * RenderingManager::GetCurrentCamera()
+{
+	return m_currentCamera;
 }

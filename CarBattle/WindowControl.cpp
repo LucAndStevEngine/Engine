@@ -153,15 +153,11 @@ void WindowControl::KeyCallback(GLFWwindow* window, int key, int scancode, int a
 
 	if (action == GLFW_PRESS)
 	{
-		InputManager::Instance().keys[key].Down = true;
-		InputManager::Instance().keys[key].Press = true;
-		InputManager::Instance().keys[key].Release = false;
+		InputManager::Instance().keys[key].pressed = true;
 	}
 	else if (action == GLFW_RELEASE)
 	{
-		InputManager::Instance().keys[key].Down = false;
-		InputManager::Instance().keys[key].Press = false;
-		InputManager::Instance().keys[key].Release = true;
+		InputManager::Instance().keys[key].released = true;
 	}
 
 }
@@ -178,15 +174,11 @@ void WindowControl::MouseButtonCallback(GLFWwindow* window, int button, int acti
 {
 	if (action == GLFW_PRESS)
 	{
-		InputManager::Instance().MouseClick[button].Down = true;
-		InputManager::Instance().MouseClick[button].Press = true;
-		InputManager::Instance().MouseClick[button].Release = false;
+		InputManager::Instance().MouseClick[button].pressed = true;
 	}
 	else if (action == GLFW_RELEASE)
 	{
-		InputManager::Instance().MouseClick[button].Down = false;
-		InputManager::Instance().MouseClick[button].Press = false;
-		InputManager::Instance().MouseClick[button].Release = true;
+		InputManager::Instance().MouseClick[button].released = true;
 	}
 }
 

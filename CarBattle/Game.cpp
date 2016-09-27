@@ -12,6 +12,7 @@
 #include "ResourceManager.h"
 #include "RigidBodyComponent.h"
 #include "ListenerComponent.h"
+#include "ParticleSystem.h"
 
 AssimpModel model;
 SceneNode* first;
@@ -49,17 +50,17 @@ void Game::Init(WindowControl* windowControl)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	Shader* shader = new Shader();
-	shader->LoadShader("SkyboxFS.glsl", GL_FRAGMENT_SHADER);
+	shader->LoadShader("Shaders/SkyboxFS.glsl", GL_FRAGMENT_SHADER);
 	shaders.push_back(shader);
 	shader = new Shader();
-	shader->LoadShader("SkyboxVS.glsl", GL_VERTEX_SHADER);
+	shader->LoadShader("Shaders/SkyboxVS.glsl", GL_VERTEX_SHADER);
 	shaders.push_back(shader);
 
 	shader = new Shader();
-	shader->LoadShader("DefaultVS.glsl", GL_VERTEX_SHADER);
+	shader->LoadShader("Shaders/DefaultVS.glsl", GL_VERTEX_SHADER);
 	shaders.push_back(shader);
 	shader = new Shader();
-	shader->LoadShader("DefaultFS.glsl", GL_FRAGMENT_SHADER);
+	shader->LoadShader("Shaders/DefaultFS.glsl", GL_FRAGMENT_SHADER);
 	shaders.push_back(shader);
 
 	ShaderProgram* program = new ShaderProgram();
@@ -104,11 +105,17 @@ void Game::Init(WindowControl* windowControl)
 
 
 	ModelRenderer* firstRenderer;
-	firstRenderer = new ModelRenderer(&model, programs[1]);
+	//firstRenderer = new ModelRenderer(&model, programs[1]);
 
-	first->AddComponent(firstRenderer);
+	//first->AddComponent(firstRenderer);
 	RigidBodyComponent* rigidBody = new RigidBodyComponent(0, 10000.0f, 0.0f, glm::vec3(0), new btBoxShape(btVector3(10, 2, 5)));
 	first->AddRigidBody(rigidBody);
+	ParticleSystem* particle = new ParticleSystem();
+	particle->SetGenProperties(glm::vec3(0, 0.25f, 0), glm::vec3(0, 0.5f, 0), glm::vec3(0), glm::vec3(1, 0, 0), 10, 100, 500);
+	Texture* texture = new Texture();
+	texture->LoadTexture2D("Particle/red.png");
+	particle->SetTexture(texture->GetTextureID());
+	first->AddComponent(particle);
 
 	two = new SceneNode();
 	sceneGraph->root->AddChild(two);
@@ -147,8 +154,8 @@ void Game::Init(WindowControl* windowControl)
 	steve = new SceneNode();
 	sceneGraph->root->AddChild(steve);
 	steve->AddComponent(new ListenerComponent);
-	steve->transform.position.z = 200;
-	
+	steve->transform.position.z = 200;	
+
 }
 
 void Game::Update()
@@ -164,10 +171,8 @@ void Game::Update()
 	}
 	if (InputManager::Instance().KeyPress(GLFW_KEY_A))
 	{
-		if(camera->GetComponent<ListenerComponent>()->isEnable == false)
-			camera->GetComponent<ListenerComponent>()->isEnable = true;
-		else 
-			camera->GetComponent<ListenerComponent>()->isEnable = false;
+		first->transform.position.z -= 10;
+		std::cout << first->transform.position.z << std::endl;
 	}
 	if (press)
 	{
@@ -197,17 +202,8 @@ void Game::Render()
 {
 	glm::mat4 proj = glm::perspective(45.0f, (float)GetWindowWidth() / (float)GetWindowHeight(), 0.01f, 1000.0f);
 	camera->SetProjection(proj);
-	cameraTwo->SetProjection(proj);
 	glViewport(0, 0, windowControl->GetWidth(), windowControl->GetHeight());
-	ShaderProgram* program = ResourceManager::GetShader("Skybox");
-	program->UseProgram();
-	//glm::mat4 proj = glm::perspective(45.0f, (((float)GetWindowWidth()/2)-5) / (float)GetWindowHeight(), 0.01f, 1000.0f);
-	program->SetUniform("projection", camera->GetProjection());
-	program->SetUniform("view", glm::translate(camera->LookAt(), camera->transform.position));
-	program->SetUniform("model", glm::mat4());
-	program->SetUniform("color", glm::vec4(1, 1, 1, 1));
-
-	program->SetUniform("fog.enabled", false);
+	ShaderProgram* program;
 
 	program = ResourceManager::GetShader("Default");
 	program->UseProgram();
@@ -222,7 +218,7 @@ void Game::Render()
 	pLight.SendToShader(*program);
 	
 	renderingManager->frustum.CreateFrustum(camera->transform, 0.01f, 1000.0f, (((float)GetWindowWidth() / 2)-5)/ (float)GetWindowHeight(), 45.0f);
-	renderingManager->RenderScene();
+	renderingManager->RenderScene(camera);
 
 
 	//glViewport(windowControl->GetWidth() / 2 + 5, 0, windowControl->GetWidth() / 2 - 5, windowControl->GetHeight());

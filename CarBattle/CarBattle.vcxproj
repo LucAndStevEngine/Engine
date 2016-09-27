@@ -29,6 +29,7 @@
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="ListenerComponent.cpp" />
     <ClCompile Include="ModelRenderer.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="RayCast.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
@@ -42,6 +43,7 @@
     <ClCompile Include="SkyboxRenderer.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="GLMath.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Transform.cpp" />
@@ -55,10 +57,12 @@
     <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="FrustumCulling.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GLMath.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="ListenerComponent.h" />
     <ClInclude Include="ModelRenderer.h" />
+    <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="RayCast.h" />
     <ClInclude Include="RenderComponent.h" />
@@ -80,13 +84,18 @@
     <ClInclude Include="WindowControl.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DefaultFS.glsl" />
-    <None Include="DefaultVS.glsl" />
-    <None Include="SkyboxFS.glsl" />
-    <None Include="SkyboxVS.glsl" />
+    <ResourceCompile Include="CarBattle.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="CarBattle.rc" />
+    <None Include="ParticleRenderFS.glsl" />
+    <None Include="ParticleRenderGS.glsl" />
+    <None Include="ParticleRenderVS.glsl" />
+    <None Include="ParticleUpdateGS.glsl" />
+    <None Include="ParticleUpdateVS.glsl" />
+    <None Include="Shaders\DefaultFS.glsl" />
+    <None Include="Shaders\DefaultVS.glsl" />
+    <None Include="Shaders\SkyboxFS.glsl" />
+    <None Include="Shaders\SkyboxVS.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DDAD0022-2E86-4B02-BE0C-41DB4758E0EC}</ProjectGuid>

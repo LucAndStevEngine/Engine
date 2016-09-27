@@ -1,6 +1,27 @@
 #include "InputManager.h"
 #include "GLFW\glfw3.h"
 
+void InputManager::UpdateInformation(ButtonState & state)
+{
+	state.Press = false;
+	state.Release = false;
+
+
+	if (state.pressed)
+	{
+		state.Press = true;
+		state.Down = true;
+		state.pressed = false;
+	}
+
+	if (state.released)
+	{
+		state.Release = true;
+		state.Down = false;
+		state.released = false;
+	}
+}
+
 InputManager::InputManager() : MouseX(0), MouseY(0)
 {
 	for (int i = 0; i < MOUSEBUTTONS; i++)
@@ -18,18 +39,17 @@ InputManager::InputManager() : MouseX(0), MouseY(0)
 	}
 }
 
+
 void InputManager::EndFrame()
 {
 	for (int i = 0; i < MOUSEBUTTONS; i++)
 	{
-		MouseClick[i].Press = false;
-		MouseClick[i].Release = false;
+		UpdateInformation(MouseClick[i]);	
 	}
 
 	for (int i = 0; i < KEYPRESSES; i++)
 	{
-		keys[i].Press = false;
-		keys[i].Release = false;
+		UpdateInformation(keys[i]);
 	}
 
 	for (int i = 0; i < JOYSTICKS; i++)
@@ -41,8 +61,7 @@ void InputManager::EndFrame()
 
 		for (int j = 0; j < joySticks[i].JoystickButtons.size(); j++)
 		{
-			joySticks[i].JoystickButtons[j].Press = false;
-			joySticks[i].JoystickButtons[j].Release = false;
+			UpdateInformation(joySticks[i].JoystickButtons[j]);
 		}
 	}
 }
@@ -143,16 +162,12 @@ void InputManager::JoyStickUpdate()
 				{
 					if (buttons[j] == GLFW_PRESS && !joySticks[i].JoystickButtons[j].Down)
 					{
-						joySticks[i].JoystickButtons[j].Press = true;
-						joySticks[i].JoystickButtons[j].Down = true;
-						joySticks[i].JoystickButtons[j].Release = false;
+						joySticks[i].JoystickButtons[j].pressed = true;
 					}
 
 					if (buttons[j] == GLFW_RELEASE && joySticks[i].JoystickButtons[j].Down)
 					{
-						joySticks[i].JoystickButtons[j].Press = false;
-						joySticks[i].JoystickButtons[j].Down = false;
-						joySticks[i].JoystickButtons[j].Release = true;
+						joySticks[i].JoystickButtons[j].released = false;
 					}
 				}
 				else

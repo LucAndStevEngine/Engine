@@ -10,10 +10,10 @@ public:
 	RenderComponent(ShaderProgram* shader, unsigned int VAO);
 
 	void SetShader(ShaderProgram* shader);
-	ShaderProgram* GetShader();
+	virtual ShaderProgram* GetShader();
 
 	void SetVAO(unsigned int VAO);
-	unsigned int GetVAO();
+	virtual unsigned int GetVAO();
 
 	virtual void Render();
 	virtual ~RenderComponent();
@@ -26,5 +26,7 @@ public:
 protected:
 	ShaderProgram* m_shader;
 	unsigned int m_VAO_ID;
+
+	class RenderingManager* m_renderManager;
 };
 

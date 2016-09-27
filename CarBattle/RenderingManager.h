@@ -13,14 +13,20 @@ public:
 	void AddRenderComp(RenderComponent* renderer);
 	void RemoveRenderComp(RenderComponent* renderer);
 
-	void RenderScene();
+	void RenderScene(class Camera* cam);
 
 	std::list<RenderComponent*> renderers;
 
 	FrustumCulling frustum;
+
+	ShaderProgram* GetCurrentShader();
+	unsigned int GetCurrentVAO();
+	class Camera* GetCurrentCamera();
+
 protected:
-	static unsigned int m_currentVAO;
+	static class Camera* m_currentCamera;;
 	static ShaderProgram* m_currentShader;
+	static unsigned int m_currentVAO;
 private:
 };
 

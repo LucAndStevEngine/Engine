@@ -40,7 +40,8 @@ unsigned int RenderComponent::GetVAO()
 
 void RenderComponent::Init()
 {
-	sceneNode->GetGame()->GetRenderManager()->AddRenderComp(this);
+	m_renderManager = sceneNode->GetGame()->GetRenderManager();
+	m_renderManager->AddRenderComp(this);
 }
 
 void RenderComponent::Render()

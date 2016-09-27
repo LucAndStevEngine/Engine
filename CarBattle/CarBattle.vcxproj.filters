@@ -19,9 +19,6 @@
     <Filter Include="Source Files\Manager">
       <UniqueIdentifier>{a77dce39-134f-49fc-a9b0-89a06a199809}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Shaders">
-      <UniqueIdentifier>{ef098aac-ed89-4f61-9c02-c843ef36d726}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\ModelLoading">
       <UniqueIdentifier>{2dd6a1cb-bccb-422f-b504-7f2da57cbab8}</UniqueIdentifier>
     </Filter>
@@ -57,6 +54,18 @@
     </Filter>
     <Filter Include="Source Files\Component\Rendering">
       <UniqueIdentifier>{47368bb0-842a-409f-b917-dccfaa549ac8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{096ce89c-1361-4e57-91df-adaa4d44cf25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Fragment">
+      <UniqueIdentifier>{dc6e1048-97f0-441d-898d-dae68f3ebf0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Vertex">
+      <UniqueIdentifier>{8b10bf75-b0b2-4abd-a7cf-4dbea0ab0a4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Geometry">
+      <UniqueIdentifier>{3affa6dc-f924-4be9-b0a7-a652144055da}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +151,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ListenerComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GLMath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -233,24 +248,45 @@
     <ClInclude Include="ListenerComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DefaultVS.glsl">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="DefaultFS.glsl">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="SkyboxVS.glsl">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="SkyboxFS.glsl">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GLMath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CarBattle.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\SkyboxFS.glsl">
+      <Filter>Shaders\Fragment</Filter>
+    </None>
+    <None Include="Shaders\DefaultFS.glsl">
+      <Filter>Shaders\Fragment</Filter>
+    </None>
+    <None Include="Shaders\SkyboxVS.glsl">
+      <Filter>Shaders\Vertex</Filter>
+    </None>
+    <None Include="Shaders\DefaultVS.glsl">
+      <Filter>Shaders\Vertex</Filter>
+    </None>
+    <None Include="ParticleRenderFS.glsl">
+      <Filter>Shaders\Fragment</Filter>
+    </None>
+    <None Include="ParticleRenderGS.glsl">
+      <Filter>Shaders\Geometry</Filter>
+    </None>
+    <None Include="ParticleUpdateGS.glsl">
+      <Filter>Shaders\Geometry</Filter>
+    </None>
+    <None Include="ParticleRenderVS.glsl">
+      <Filter>Shaders\Vertex</Filter>
+    </None>
+    <None Include="ParticleUpdateVS.glsl">
+      <Filter>Shaders\Vertex</Filter>
+    </None>
   </ItemGroup>
 </Project>
