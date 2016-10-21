@@ -3,11 +3,14 @@
 // GLEW Include
 #include <GL\glew.h>
 #include <vector>
+#include <stack>
 #include "Shader.h"
 #include "SceneGraph.h"
 #include "RenderingManager.h"
 #include "PhysicsManager.h"
 #include "SoundManager.h"
+
+class Scene;
 
 class Game
 {
@@ -29,21 +32,20 @@ public:
 	RenderingManager* GetRenderManager();
 	PhysicsManager* GetPhysicsManager();
 	SoundManager* GetSoundManager();
+	SceneGraph* GetSceneGraph();
+
+	Scene* GetCurrentScene();
+
+	void PushScene(Scene* newScene);
+	void PopScene();
+	void ClearScenes();
 
 protected:
-	std::vector<ShaderProgram*> programs;
-	std::vector<Shader*> shaders;
-
 	class WindowControl* windowControl;
 	virtual void Shutdown();
-	virtual ~Game();
-	RenderingManager *renderingManager;
-	PhysicsManager *physicsManager;
-	SoundManager *soundManager;
-	
+	virtual ~Game();	
 private:
-	class Skybox* skybox;
-	class Camera* camera;
-	class Camera* cameraTwo;
+
+	std::stack<Scene*> m_sceneStack;
 };
 

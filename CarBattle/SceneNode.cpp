@@ -196,6 +196,7 @@ void SceneNode::Update()
 	}
 
 	UpdateTransform();
+
 }
 
 void SceneNode::FixedUpdate()

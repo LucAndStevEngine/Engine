@@ -36,6 +36,7 @@
     <ClCompile Include="RenderingManager.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="RigidBodyComponent.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneGraph.cpp" />
     <ClCompile Include="SceneNode.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -44,6 +45,7 @@
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="GLMath.cpp" />
+    <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Transform.cpp" />
@@ -70,6 +72,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="RigidBodyComponent.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneGraph.h" />
     <ClInclude Include="SceneNode.h" />
     <ClInclude Include="Shader.h" />
@@ -77,6 +80,7 @@
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="SkyboxRenderer.h" />
     <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="TextRenderer.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Transform.h" />
@@ -96,6 +100,8 @@
     <None Include="Shaders\DefaultVS.glsl" />
     <None Include="Shaders\SkyboxFS.glsl" />
     <None Include="Shaders\SkyboxVS.glsl" />
+    <None Include="TextFS.glsl" />
+    <None Include="TextVS.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DDAD0022-2E86-4B02-BE0C-41DB4758E0EC}</ProjectGuid>
@@ -158,8 +164,8 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../libs;../libs/glfw;../libs/glew;../libs/freeImage;../libs/assimp;../lib/Debug;../libs/fmod</AdditionalLibraryDirectories>
-      <AdditionalDependencies>assimpd.lib;FreeImage.lib;opengl32.lib;glfw3.lib;glew32.lib;BulletDynamics_vs2010_debug.lib;BulletCollision_vs2010_debug.lib;LinearMath_vs2010_debug.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../libs;../libs/glfw;../libs/glew;../libs/freeImage;../libs/assimp;../lib/Debug;../libs;../libs/fmod</AdditionalLibraryDirectories>
+      <AdditionalDependencies>freetype.lib;assimpd.lib;FreeImage.lib;opengl32.lib;glfw3.lib;glew32.lib;BulletDynamics_vs2010_debug.lib;BulletCollision_vs2010_debug.lib;LinearMath_vs2010_debug.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

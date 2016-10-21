@@ -159,6 +159,12 @@
     <ClCompile Include="GLMath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InputManager.h">
@@ -218,9 +224,6 @@
     <ClInclude Include="RenderingManager.h">
       <Filter>Header Files\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RenderComponent.h">
       <Filter>Header Files\Components\Rendering</Filter>
     </ClInclude>
@@ -252,6 +255,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GLMath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Header Files\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="TextRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -286,6 +298,12 @@
       <Filter>Shaders\Vertex</Filter>
     </None>
     <None Include="ParticleUpdateVS.glsl">
+      <Filter>Shaders\Vertex</Filter>
+    </None>
+    <None Include="TextFS.glsl">
+      <Filter>Shaders\Fragment</Filter>
+    </None>
+    <None Include="TextVS.glsl">
       <Filter>Shaders\Vertex</Filter>
     </None>
   </ItemGroup>

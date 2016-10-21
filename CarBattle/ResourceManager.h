@@ -14,7 +14,15 @@ class ResourceManager
 public:
 	// Resource storage
 	static std::map<std::string, ShaderProgram*> Shaders;
+	static std::map<std::string, Shader*> IndividualShader;
 	static std::map<std::string, FMOD::Sound*> Sounds;
+
+	// Saves the shader in a map
+	static Shader* SaveIndividualShader(Shader*, std::string name);
+	// Retrieves a stored sader
+	static Shader* GetIndividualShader(std::string name);
+	// Removes a shader from the map with the specified name
+	static void RemoveIndividualShader(std::string name);
 
 	// Saves the shader in a map
 	static ShaderProgram* SaveShader(ShaderProgram*, std::string name);

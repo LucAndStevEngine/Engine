@@ -1,16 +1,12 @@
-﻿Build started 2016-09-27 5:20:35 PM.
+﻿Build started 2016-10-21 11:51:00 AM.
      1>Project "C:\Users\Steve\Documents\Engine\CarBattle\CarBattle.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I../includes /I../src /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Game.cpp
-         Game.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I../includes /I../src /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt WindowControl.cpp
+         WindowControl.cpp
      1>c:\users\steve\documents\engine\carbattle\time.h(16): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-     1>c:\users\steve\documents\engine\carbattle\game.cpp(39): warning C4316: 'PhysicsManager': object allocated on the heap may not be aligned 16
-     1>c:\users\steve\documents\engine\carbattle\game.cpp(111): warning C4316: 'RigidBodyComponent': object allocated on the heap may not be aligned 16
-     1>c:\users\steve\documents\engine\carbattle\game.cpp(127): warning C4316: 'RigidBodyComponent': object allocated on the heap may not be aligned 16
-     1>c:\users\steve\documents\engine\carbattle\game.cpp(179): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-     1>cl : Command line warning D9028: minimal rebuild failure, reverting to normal build
+     1>c:\users\steve\documents\engine\carbattle\windowcontrol.cpp(110): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Steve\Documents\Engine\Debug\CarBattle.exe" /INCREMENTAL /NOLOGO /LIBPATH:../libs /LIBPATH:../libs/glfw /LIBPATH:../libs/glew /LIBPATH:../libs/freeImage /LIBPATH:../libs/assimp /LIBPATH:../lib/Debug /LIBPATH:../libs/fmod assimpd.lib FreeImage.lib opengl32.lib glfw3.lib glew32.lib BulletDynamics_vs2010_debug.lib BulletCollision_vs2010_debug.lib LinearMath_vs2010_debug.lib fmod_vc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Steve\Documents\Engine\Debug\CarBattle.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Steve\Documents\Engine\Debug\CarBattle.lib" /MACHINE:X86 Debug\CarBattle.res
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Steve\Documents\Engine\Debug\CarBattle.exe" /INCREMENTAL /NOLOGO /LIBPATH:../libs /LIBPATH:../libs/glfw /LIBPATH:../libs/glew /LIBPATH:../libs/freeImage /LIBPATH:../libs/assimp /LIBPATH:../lib/Debug /LIBPATH:../libs /LIBPATH:../libs/fmod freetype.lib assimpd.lib FreeImage.lib opengl32.lib glfw3.lib glew32.lib BulletDynamics_vs2010_debug.lib BulletCollision_vs2010_debug.lib LinearMath_vs2010_debug.lib fmod_vc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Steve\Documents\Engine\Debug\CarBattle.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Steve\Documents\Engine\Debug\CarBattle.lib" /MACHINE:X86 Debug\CarBattle.res
          Debug\AssimpModel.obj
          Debug\Camera.obj
          Debug\Component.obj
@@ -28,6 +24,7 @@
          Debug\RenderingManager.obj
          Debug\ResourceManager.obj
          Debug\RigidBodyComponent.obj
+         Debug\Scene.obj
          Debug\SceneGraph.obj
          Debug\SceneNode.obj
          Debug\Shader.obj
@@ -36,15 +33,15 @@
          Debug\SoundManager.obj
          Debug\Source.obj
          Debug\GLMath.obj
+         Debug\TextRenderer.obj
          Debug\Texture.obj
          Debug\Time.obj
          Debug\Transform.obj
          Debug\VertexBufferObject.obj
          Debug\WindowControl.obj
-     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
          CarBattle.vcxproj -> C:\Users\Steve\Documents\Engine\Debug\CarBattle.exe
      1>Done Building Project "C:\Users\Steve\Documents\Engine\CarBattle\CarBattle.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:03.45
+Time Elapsed 00:00:01.95

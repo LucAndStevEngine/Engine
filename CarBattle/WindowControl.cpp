@@ -97,7 +97,7 @@ void WindowControl::Loop()
 	{
 		// Check call events
 		glfwPollEvents();
-		
+
 		Render();
 	}	
 }

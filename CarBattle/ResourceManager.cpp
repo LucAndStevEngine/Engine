@@ -1,10 +1,28 @@
 #include "ResourceManager.h"
 
 std::map<std::string, ShaderProgram*> ResourceManager::Shaders;
+std::map<std::string, Shader*> ResourceManager::IndividualShader;
 std::map<std::string, FMOD::Sound*> ResourceManager::Sounds;
 
 ResourceManager::ResourceManager()
 {
+}
+
+Shader * ResourceManager::SaveIndividualShader(Shader *shader, std::string name)
+{
+	IndividualShader[name] = shader;
+	return shader;
+}
+
+Shader * ResourceManager::GetIndividualShader(std::string name)
+{
+	return IndividualShader[name];
+}
+
+void ResourceManager::RemoveIndividualShader(std::string name)
+{
+	Shader* shader = GetIndividualShader(name);
+	Shaders.erase(name);
 }
 
 ShaderProgram* ResourceManager::SaveShader(ShaderProgram* shader, std::string name)

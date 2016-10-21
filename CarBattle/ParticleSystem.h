@@ -35,7 +35,7 @@ public:
 	int GetNumOfParticles();
 
 	void SetGenProperties(glm::vec3 minVelo, glm::vec3 maxVelo, glm::vec3 gravity, glm::vec3 color, float minLife, float maxLife, float size);
-	void SetTexture(unsigned int texID);
+	void SetTexture(class Texture* texture);
 
 	ParticleSystem();
 	~ParticleSystem();
@@ -50,7 +50,7 @@ private:
 	unsigned int* m_VAOs[2];
 
 	unsigned int m_query;
-	unsigned int m_textureID;
+	class Texture* m_texture;
 
 	int m_currentReadBuffer;
 	int m_numOfParticles;

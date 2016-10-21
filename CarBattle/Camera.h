@@ -11,6 +11,8 @@ public:
 
 	Camera();
 	~Camera();
+
+	float cameraWidth, cameraHeight;
 private:
 	glm::mat4 m_projectionMat;
 };

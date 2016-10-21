@@ -7,6 +7,7 @@
 #include "Game.h"
 #include "ResourceManager.h"
 #include "Camera.h"
+#include "Texture.h"
 
 ParticleSystem::ParticleSystem()
 {
@@ -95,7 +96,7 @@ void ParticleSystem::Init()
 	glGenBuffers(2, m_particleBuffer);
 
 	m_VAOs[0] = &m_VAO_ID;
-	m_VAOs[1] = &m_VAO_ID;
+	m_VAOs[1] = &m_VAO_ID_TWO;
 	glGenVertexArrays(2, *m_VAOs);
 
 	Particle particleInit;
@@ -138,18 +139,18 @@ void ParticleSystem::Render()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 	glDepthMask(0);
 
+	glDisable(GL_RASTERIZER_DISCARD);
+	glDisableVertexAttribArray(1);
+
 	m_shaderTwo->SetUniform("projection", m_renderManager->GetCurrentCamera()->GetProjection());
 	m_shaderTwo->SetUniform("view", m_renderManager->GetCurrentCamera()->LookAt());
 	m_shaderTwo->SetUniform("quad1", &quad1);
 	m_shaderTwo->SetUniform("quad2", &quad2);
 	m_shaderTwo->SetUniform("texture", 0);
 
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(0, m_textureID);
+	m_texture->BindTexture();
 
 
-	glDisable(GL_RASTERIZER_DISCARD);
-	glDisableVertexAttribArray(1);
 
 	glDrawArrays(GL_POINTS, 0, m_numOfParticles);
 
@@ -162,8 +163,20 @@ void ParticleSystem::Update()
 	if (!m_bIsInitialized)
 		return;
 
+	std::cout << m_numOfParticles << std::endl;
+
 	ShaderProgram* lastProgram = m_renderManager->GetCurrentShader();
 	unsigned int lastVAO = m_renderManager->GetCurrentVAO();
+
+	if (m_renderManager->GetCurrentCamera() != NULL)
+	{
+		Camera *camera = m_renderManager->GetCurrentCamera();
+		glm::vec3 normView = glm::normalize(camera->transform.forward);
+		quad1 = glm::cross(normView, camera->transform.up);
+		quad1 = glm::normalize(quad1);
+		quad2 = glm::cross(normView, quad1);
+		quad2 = glm::normalize(quad2);
+	}
 
 	m_shader->UseProgram();
 
@@ -221,15 +234,6 @@ void ParticleSystem::Update()
 		glBindVertexArray(lastVAO);
 	}
 
-	if (m_renderManager->GetCurrentCamera() != NULL)
-	{
-		Camera *camera = m_renderManager->GetCurrentCamera();
-		glm::vec3 normView = glm::normalize(camera->transform.position + camera->transform.forward);
-		quad1 = glm::cross(normView, camera->transform.up);
-		quad1 = glm::normalize(quad1);
-		quad2 = glm::cross(normView, quad1);
-		quad2 = glm::normalize(quad2);
-	}
 
 
 }
@@ -262,11 +266,11 @@ void ParticleSystem::SetGenProperties(glm::vec3 minVelo, glm::vec3 maxVelo, glm:
 	m_lifeMin = minLife;
 	m_lifeMax = maxLife;
 	m_size = size;
-	m_nextGenTime = 0.1f;
+	m_nextGenTime = 0.5f;
 	m_numToGenerate = 500;
 }
 
-void ParticleSystem::SetTexture(unsigned int texID)
+void ParticleSystem::SetTexture(Texture* tex)
 {
-	m_textureID = texID;
+	m_texture = tex;
 }
