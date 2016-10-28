@@ -1,14 +1,17 @@
-﻿Build started 2016-10-21 11:51:00 AM.
-     1>Project "C:\Users\Steve\Documents\Engine\CarBattle\CarBattle.vcxproj" on node 2 (Build target(s)).
+﻿Build started 10/28/2016 12:28:30 PM.
+     1>Project "C:\Users\luctv\Documents\Engine\CarBattle\CarBattle.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I../includes /I../src /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt WindowControl.cpp
-         WindowControl.cpp
-     1>c:\users\steve\documents\engine\carbattle\time.h(16): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
-     1>c:\users\steve\documents\engine\carbattle\windowcontrol.cpp(110): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I../includes /I../src /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Scene.cpp
+         Scene.cpp
+     1>c:\users\luctv\documents\engine\carbattle\time.h(16): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+     1>c:\users\luctv\documents\engine\carbattle\scene.cpp(43): warning C4316: 'PhysicsManager': object allocated on the heap may not be aligned 16
+     1>c:\users\luctv\documents\engine\carbattle\scene.cpp(73): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+     1>c:\users\luctv\documents\engine\carbattle\scene.cpp(74): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Steve\Documents\Engine\Debug\CarBattle.exe" /INCREMENTAL /NOLOGO /LIBPATH:../libs /LIBPATH:../libs/glfw /LIBPATH:../libs/glew /LIBPATH:../libs/freeImage /LIBPATH:../libs/assimp /LIBPATH:../lib/Debug /LIBPATH:../libs /LIBPATH:../libs/fmod freetype.lib assimpd.lib FreeImage.lib opengl32.lib glfw3.lib glew32.lib BulletDynamics_vs2010_debug.lib BulletCollision_vs2010_debug.lib LinearMath_vs2010_debug.lib fmod_vc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Steve\Documents\Engine\Debug\CarBattle.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Steve\Documents\Engine\Debug\CarBattle.lib" /MACHINE:X86 Debug\CarBattle.res
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\luctv\Documents\Engine\Debug\CarBattle.exe" /INCREMENTAL /NOLOGO /LIBPATH:../libs /LIBPATH:../libs/glfw /LIBPATH:../libs/glew /LIBPATH:../libs/freeImage /LIBPATH:../libs/assimp /LIBPATH:../lib/Debug /LIBPATH:../libs /LIBPATH:../libs/fmod freetype.lib assimpd.lib FreeImage.lib opengl32.lib glfw3.lib glew32.lib BulletDynamics_vs2010_debug.lib BulletCollision_vs2010_debug.lib LinearMath_vs2010_debug.lib fmod_vc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\luctv\Documents\Engine\Debug\CarBattle.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\luctv\Documents\Engine\Debug\CarBattle.lib" /MACHINE:X86 Debug\CarBattle.res
          Debug\AssimpModel.obj
          Debug\Camera.obj
+         Debug\Car.obj
          Debug\Component.obj
          Debug\FrameBuffer.obj
          Debug\FrustumCulling.obj
@@ -39,9 +42,9 @@
          Debug\Transform.obj
          Debug\VertexBufferObject.obj
          Debug\WindowControl.obj
-         CarBattle.vcxproj -> C:\Users\Steve\Documents\Engine\Debug\CarBattle.exe
-     1>Done Building Project "C:\Users\Steve\Documents\Engine\CarBattle\CarBattle.vcxproj" (Build target(s)).
+         CarBattle.vcxproj -> C:\Users\luctv\Documents\Engine\Debug\CarBattle.exe
+     1>Done Building Project "C:\Users\luctv\Documents\Engine\CarBattle\CarBattle.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.95
+Time Elapsed 00:00:01.53

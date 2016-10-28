@@ -1,8 +1,8 @@
-﻿Build started 2016-09-09 2:13:10 PM.
-     1>Project "C:\Users\Steve\Documents\Engine\src\Dependencies\BulletCollision.vcxproj" on node 2 (Build target(s)).
+﻿Build started 10/25/2016 4:21:30 PM.
+     1>Project "C:\Users\luctv\Documents\Engine\src\Dependencies\BulletCollision.vcxproj" on node 2 (Build target(s)).
      1>Lib:
-         BulletCollision.vcxproj -> C:\Users\Steve\Documents\Engine\src\Dependencies\..\..\lib\Debug\BulletCollision_vs2010_debug.lib
-     1>Done Building Project "C:\Users\Steve\Documents\Engine\src\Dependencies\BulletCollision.vcxproj" (Build target(s)).
+         BulletCollision.vcxproj -> C:\Users\luctv\Documents\Engine\src\Dependencies\..\..\lib\Debug\BulletCollision_vs2010_debug.lib
+     1>Done Building Project "C:\Users\luctv\Documents\Engine\src\Dependencies\BulletCollision.vcxproj" (Build target(s)).
 
 Build succeeded.
 

@@ -14,7 +14,8 @@
 #include "Skybox.h"
 #include "GLFW\glfw3.h"
 #include "Camera.h"
-
+#include "Car.h"
+Car* car;
 Scene::Scene(Game* newGame) : m_isInitialized(false), game(newGame)
 {
 }
@@ -72,6 +73,30 @@ void Scene::Init()
 	camera->cameraWidth = game->GetWindowWidth();
 	camera->cameraHeight = game->GetWindowHeight();
 	sceneGraph->root->AddChild(camera);
+
+
+	Shader* Steve = new Shader();
+	Steve->LoadShader("Shaders/DefaultFS.glsl", GL_FRAGMENT_SHADER);
+	ResourceManager::SaveIndividualShader(shader, "DefaultFS");
+	Steve = new Shader();
+	Steve->LoadShader("Shaders/DefaultVS.glsl", GL_VERTEX_SHADER);
+	ResourceManager::SaveIndividualShader(shader, "DefaultVS");
+	ShaderProgram* carShader = new ShaderProgram();
+	carShader->CreateProgram();
+	carShader->AddShaderToProgram(ResourceManager::GetIndividualShader("DefaultFS"));
+	carShader->AddShaderToProgram(ResourceManager::GetIndividualShader("DefaultVS"));
+	carShader->LinkProgram();
+	ResourceManager::SaveShader(carShader, "Default");
+	 car = new Car();
+	car->transform.position.x = 0;
+	car->transform.position.y = 0;
+	car->transform.position.z = -3;
+	car->transform.scale.x = 1000;
+
+
+	sceneGraph->root->AddChild(car);
+	car->Init();
+
 
 	m_isInitialized = true;
 }

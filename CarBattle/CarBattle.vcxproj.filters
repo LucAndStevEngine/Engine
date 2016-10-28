@@ -67,6 +67,9 @@
     <Filter Include="Shaders\Geometry">
       <UniqueIdentifier>{3affa6dc-f924-4be9-b0a7-a652144055da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\luc%27s stuff">
+      <UniqueIdentifier>{be2e8006-8cfa-4b57-b2b5-4d6022bc4093}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -164,6 +167,9 @@
     </ClCompile>
     <ClCompile Include="TextRenderer.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Car.cpp">
+      <Filter>Header Files\luc%27s stuff</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -265,6 +271,9 @@
     </ClInclude>
     <ClInclude Include="TextRenderer.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Car.h">
+      <Filter>Header Files\luc%27s stuff</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

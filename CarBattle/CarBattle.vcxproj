@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="AssimpModel.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Car.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="FrameBuffer.cpp" />
     <ClCompile Include="FrustumCulling.cpp" />
@@ -55,6 +56,7 @@
   <ItemGroup>
     <ClInclude Include="AssimpModel.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Car.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="FrustumCulling.h" />

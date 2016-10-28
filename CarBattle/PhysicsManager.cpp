@@ -87,5 +87,16 @@ bool PhysicsManager::RemoveCollisionBody(RigidBodyComponent* body)
 	return true;
 }
 
+void PhysicsManager::AddVehicle(btRaycastVehicle* vehicle, RigidBodyComponent * body)
+{
+	m_dynamicWorld->addVehicle(vehicle);
+	m_rigidBodies.push_back(body);
+}
+
+btDiscreteDynamicsWorld * PhysicsManager::getWorld()
+{
+	return m_dynamicWorld;
+}
+
 
 

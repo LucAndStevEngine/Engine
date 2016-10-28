@@ -18,6 +18,8 @@ public:
 
 	void AddCollisionBody(class RigidBodyComponent* body);
 	bool RemoveCollisionBody(class RigidBodyComponent* body);
+	void AddVehicle(btRaycastVehicle* vehicle, class RigidBodyComponent* body);
+	btDiscreteDynamicsWorld* getWorld();
 
 private:
 	btDefaultCollisionConfiguration* m_collisionConfig;
