@@ -39,11 +39,9 @@ Car::~Car()
 void Car::Init()
 {
 	//assert(GetParent() != NULL);
-	model->LoadModelFromFile("models\BMW_M3_GTR\BMW_M3_GTR.obj");
 	RigidBodyComponent* Hull = new RigidBodyComponent(0, 10000.0f, 0.0f, glm::vec3(0), new btBoxShape(btVector3(1, 1, 1)));
 	AddComponent(Hull);
-	RenderComponent* render = new ModelRenderer(model);
-	render->SetShader(ResourceManager::GetShader("Default"));
+	ModelRenderer* render = new ModelRenderer(ResourceManager::GetModel("models/BMW_M3_GTR/BMW_M3_GTR.obj"), ResourceManager::GetShader("Default"));
 	AddComponent(render);
 	
 	Hull->mass = 800.0f;

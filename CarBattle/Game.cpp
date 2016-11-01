@@ -14,14 +14,14 @@ Game::Game()
 void Game::Init(WindowControl* windowControl)
 {
 	this->windowControl = windowControl;
-
-	GetCurrentScene()->Init();
-
+	
 	glEnable(GL_DEPTH_TEST);
-	glClearDepth(1.0);
+	glClearDepth(1);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	GetCurrentScene()->Init();
 }
 
 void Game::Update()
@@ -41,7 +41,6 @@ void Game::Render()
 
 void Game::Shutdown()
 {
-	delete sceneGraph;
 }
 
 int Game::GetWindowHeight()

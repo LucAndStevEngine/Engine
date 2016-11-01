@@ -27,8 +27,6 @@ public:
 	int GetWindowHeight();
 	int GetWindowWidth();
 	
-	SceneGraph* sceneGraph;
-
 	RenderingManager* GetRenderManager();
 	PhysicsManager* GetPhysicsManager();
 	SoundManager* GetSoundManager();
